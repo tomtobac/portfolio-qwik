@@ -1,0 +1,27 @@
+.host {
+  display: grid;
+
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  --rotation: 135deg;
+  --rotation: 225deg;
+  --size-step: 10px;
+  --odd-color-step: 5;
+  --even-color-step: 5;
+  --center: 12;
+
+  width: 100%;
+  height: 500px;
+
+  contain: strict;
+}
+
+h1 {
+  margin-bottom: 60px;
+}
+
+.img-rounded {
+  border-radius: 50%;
+  padding: 1em;
+}

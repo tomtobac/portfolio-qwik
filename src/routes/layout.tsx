@@ -8,9 +8,10 @@ import styles from './styles.css?inline';
 
 export const useServerTimeLoader = routeLoader$(() => {
   return {
-    date: new Date().toISOString(),
+    date: 'vale vale entendí',
   };
 });
+
 
 export default component$(() => {
   useStyles$(styles);
