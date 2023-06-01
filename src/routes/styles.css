@@ -27,7 +27,7 @@ h1 {
 }
 h1 .highlight,
 h3 .highlight {
-  color: var(--qwik-light-blue);
+  color: var(--qwik-dark-text);
 }
 
 h2 {
@@ -44,7 +44,7 @@ h3 {
 
 @media screen and (min-width: 768px) {
   h1 {
-    font-size: 5rem;
+    font-size: 4rem;
   }
   h2 {
     font-size: 3.4rem;
