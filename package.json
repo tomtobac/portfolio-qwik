@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "googleapis": "^118.0.0",
+    "markdown-it": "^13.0.1",
     "vite-plugin-commonjs": "^0.7.1"
   }
 }
