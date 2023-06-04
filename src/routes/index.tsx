@@ -38,7 +38,7 @@ const twitchDataInfo = $(async function (name: string, state: any) {
 
 async function obtenerShortsYVideosDeCanal(apiKey, channelId) {
   try {
-    const url = `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&part=snippet&key=${apiKey}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}`;
     // https://content-youtube.googleapis.com/youtube/v3/search?channelId=UC9h5heKFR7KaoLSzjWIIxjw&channelType=any&part=snippet&maxResults=10&key=AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM
 
     const response = await fetch(url);
@@ -49,8 +49,9 @@ async function obtenerShortsYVideosDeCanal(apiKey, channelId) {
 
     const data = await response.json();
 
-    const shorts = data.items;
-    console.log("Shorts:", shorts);
+    const videos = data.items;
+    // console.log("videos:", videos);
+    return videos;
 
     // Obtén los videos del canal (realiza otra solicitud si es necesario)
     // ...
@@ -76,6 +77,9 @@ export default component$(() => {
       userInfo: {},
       categoryInfo: {},
       channelInfo: {},
+    },
+    youtube: {
+      videos: [],
     },
   });
 
@@ -110,22 +114,7 @@ export default component$(() => {
     const apiKey = "AIzaSyDjyp6v1Zb1SV8JdeoV-rLT_rR1MONAL9U";
     const channelId = "UC9h5heKFR7KaoLSzjWIIxjw"; // ID del canal "arturodevelop"
 
-    const youtubeVideos = obtenerShortsYVideosDeCanal(apiKey, channelId);
-
-    console.log("videosyoutube", youtubeVideos);
-
-    const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apiKey}`;
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        // Maneja la respuesta del API
-        console.log(data);
-      })
-      .catch((error) => {
-        // Maneja cualquier error de la llamada al API
-        console.error(error);
-      });
+    state.youtube.videos = await obtenerShortsYVideosDeCanal(apiKey, channelId);
 
     state.twitch.api = noSerialize(new Twitch());
     state.twitch.token = await state.twitch.api.getToken();
@@ -136,10 +125,11 @@ export default component$(() => {
 
   return (
     <div class="container container-center">
+      <img class="img-rounded" src={state.dataServerJson.avatar_url} alt="" />
+
       <div role="presentation" class="ellipsis"></div>
       <h1>
-        <span class="highlight">Portfolio {state.dataServerJson.name}</span>
-        <img class="img-rounded" src={state.dataServerJson.avatar_url} alt="" />
+        <span class="highlight">{state.dataServerJson.name}</span>
       </h1>
 
       <div class="icons-socials">
@@ -187,7 +177,18 @@ export default component$(() => {
           />
         </svg>
       </div>
-
+      <ul class="repos-list-container">
+        {state.youtube.videos.length &&
+          state.youtube.videos.map((video) => (
+            <li key={video.id.videoId}>
+              <img
+                class=""
+                src={video.snippet.thumbnails.high.url}
+                alt=""
+              />
+            </li>
+          ))}
+      </ul>
       <ul class="repos-list-container">
         {state.github.repos &&
           state.github.repos.map((repo) => (
