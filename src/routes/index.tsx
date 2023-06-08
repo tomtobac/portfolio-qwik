@@ -141,9 +141,7 @@ export default component$(() => {
 
     state.youtube.videos = await obtenerShortsYVideosDeCanal(
       apiKey,
-      channelId,
-      state
-    );
+      channelId);
 
     const repos = await getRepos()
 
