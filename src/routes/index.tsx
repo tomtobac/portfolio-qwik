@@ -10,7 +10,6 @@ import { type DocumentHead } from "@builder.io/qwik-city";
 import { Twitch } from "../utils/api-twitch";
 import MarkdownIt from "markdown-it";
 
-import styles from "./styles.css";
 import mdStyles from "../utils/md-css.css";
 import { YoutubeIcon } from "~/icons/youtube-icon";
 import { GithubIcon } from "~/icons/github-icon";
@@ -55,7 +54,7 @@ async function obtenerShortsYVideosDeCanal(
   state: any
 ) {
   try {
-    const url = `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}`;
+    // const url = `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}`;
     // https://content-youtube.googleapis.com/youtube/v3/search?channelId=UC9h5heKFR7KaoLSzjWIIxjw&channelType=any&part=snippet&maxResults=10&key=AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM
 
     const response = await fetch(state.apiYoutubeMock);
@@ -137,7 +136,7 @@ export default component$(() => {
 
   });
 
-  useVisibleTask$(async ({ cleanup }) => {
+  useVisibleTask$(async () => {
     const apiKey = "AIzaSyDjyp6v1Zb1SV8JdeoV-rLT_rR1MONAL9U";
     const channelId = "UC9h5heKFR7KaoLSzjWIIxjw"; // ID del canal "arturodevelop"
 
@@ -149,7 +148,7 @@ export default component$(() => {
 
     const repos = await getRepos()
 
-    state.github.repos = repos.sort((a:any, b:any) =>
+    state.github.repos = repos.sort((a: any, b: any) =>
       b.pushed_at.localeCompare(a.pushed_at)
     );
 
@@ -178,7 +177,7 @@ export default component$(() => {
         flex justify-center absolute 
         top-0 right-4 w-32 h-80 z-10 
         after:bg-gradient-to-b after:from-[#9046FF] after:to-[rgba(0,0,0,0)] after:w-5/6 after:absolute after:top-0 after:h-full">
-          <LogoIcon className={['relative', 'top-8', 'z-[4]']} width={74} height={74} />
+          <LogoIcon classList={['relative', 'top-8', 'z-[4]']} width={74} height={74} />
           <img class="absolute bottom-[-50px] scale-110" src="/imgs/pordiu.png" alt="Arturobobo" />
         </figure>
 
@@ -269,7 +268,7 @@ export default component$(() => {
       </div> */}
       <ul class="repos-list-container hidden">
         {state.youtube.videos.length &&
-          state.youtube.videos.map((video:any) => (
+          state.youtube.videos.map((video: any) => (
             <li key={video.id.videoId}>
               <img class="" src={video.snippet.thumbnails.high.url} alt="" />
               <span>{video.snippet.title}</span>

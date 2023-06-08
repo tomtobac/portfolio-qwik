@@ -3,16 +3,16 @@ import type { ClassList } from "@builder.io/qwik";
 export const LogoIcon = ({
     width = 100,
     height = 35,
-    className = [],
+    classList = [],
     fill = "none",
 }: {
     width?: number;
     height?: number;
-    className?: Array<ClassList>;
+    classList?: Array<ClassList>;
     fill?: string;
 }) => (
     <svg xmlns="http://www.w3.org/2000/svg"
-        class={[className]}
+        class={[classList]}
         width={width}
         height={height}
         fill={fill}
