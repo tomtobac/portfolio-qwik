@@ -82,6 +82,7 @@ export default component$(() => {
   const state = useStore<any>({
     apiGithubUrl: "https://api.github.com/users/arturozarzalejo",
     apiGithubMock: "http://localhost:5173/server/api-github-mock.json",
+    apiGithubRepos: "https://api.github.com/users/arturozarzalejo/repos",
     apiGithubReposMock: "http://localhost:5173/server/api-github-repos.json",
     apiYoutubeMock: "http://localhost:5173/server/api-youtube-mock.json",
     dataServerJson: {},
@@ -113,7 +114,7 @@ export default component$(() => {
 
   const getRepos = $(async () => {
     return fetch(
-      state.apiGithubReposMock
+      state.apiGithubRepos
     )
       .then((response) => response.json())
       .then((data) => data)
