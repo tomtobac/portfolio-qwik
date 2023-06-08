@@ -51,13 +51,12 @@ const twitchDataInfo = $(async function (
 async function obtenerShortsYVideosDeCanal(
   apiKey: string,
   channelId: string,
-  state: any
 ) {
   try {
-    // const url = `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}`;
     // https://content-youtube.googleapis.com/youtube/v3/search?channelId=UC9h5heKFR7KaoLSzjWIIxjw&channelType=any&part=snippet&maxResults=10&key=AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM
 
-    const response = await fetch(state.apiYoutubeMock);
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Error al obtener los shorts y videos");
@@ -126,7 +125,7 @@ export default component$(() => {
   });
 
   useTask$(async () => {
-    state.dataServerJson = await fetch(state.apiGithubMock)
+    state.dataServerJson = await fetch(state.apiGithubUrl)
       .then((response) => response.json())
       .then((data) => data)
       .catch((error) => {
