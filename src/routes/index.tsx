@@ -10,7 +10,7 @@ import { type DocumentHead } from "@builder.io/qwik-city";
 import { Twitch } from "../utils/api-twitch";
 import MarkdownIt from "markdown-it";
 
-import mdStyles from "../utils/md-css.css";
+import mdStyles from "../utils/md-css.css?inline";
 import { YoutubeIcon } from "~/icons/youtube-icon";
 import { GithubIcon } from "~/icons/github-icon";
 import { TwitchIcon } from "~/icons/twitch-icon";
@@ -62,11 +62,31 @@ async function obtenerShortsYVideosDeCanal(apiKey: string, channelId: string) {
     const data = await response.json();
 
     const videos = data.items;
+
     // console.log("videos:", videos);
     return videos;
 
     // Obtén los videos del canal (realiza otra solicitud si es necesario)
     // ...
+  } catch (error) {
+    console.error("Error al obtener los shorts y videos:", error);
+  }
+}
+
+async function obtenerThumbnailsYT(videoId: string, API_KEY: string) {
+  try {
+    const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Error al obtener los shorts y videos");
+    }
+
+    const data = await response.json();
+
+    // console.log("videos:", videos);
+    return data;
   } catch (error) {
     console.error("Error al obtener los shorts y videos:", error);
   }
@@ -134,6 +154,11 @@ export default component$(() => {
     const channelId = "UC9h5heKFR7KaoLSzjWIIxjw"; // ID del canal "arturodevelop"
 
     state.youtube.videos = await obtenerShortsYVideosDeCanal(apiKey, channelId);
+
+    state.youtube.videos.map(async (video: any) => {
+      const videoMaxRes = await obtenerThumbnailsYT(video.id.videoId, apiKey);
+      return video.snippet.thumbnails = videoMaxRes.items[0].snippet.thumbnails
+    });
 
     const repos = await getRepos();
 
@@ -243,7 +268,7 @@ export default component$(() => {
                   <div class="relative">
                     <img
                       class="h-[360px] rounded-xl object-center object-cover"
-                      src={video.snippet.thumbnails.high.url}
+                      src={video.snippet.thumbnails.maxres.url}
                       alt=""
                     />
                     <div class="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0)] absolute top-0 left-0 h-full w-full z-2 rounded-xl">
