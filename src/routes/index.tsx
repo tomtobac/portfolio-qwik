@@ -149,7 +149,7 @@ export default component$(() => {
 
     const repos = await getRepos()
 
-    state.github.repos = repos.sort((a, b) =>
+    state.github.repos = repos.sort((a:any, b:any) =>
       b.pushed_at.localeCompare(a.pushed_at)
     );
 
@@ -269,7 +269,7 @@ export default component$(() => {
       </div> */}
       <ul class="repos-list-container hidden">
         {state.youtube.videos.length &&
-          state.youtube.videos.map((video) => (
+          state.youtube.videos.map((video:any) => (
             <li key={video.id.videoId}>
               <img class="" src={video.snippet.thumbnails.high.url} alt="" />
               <span>{video.snippet.title}</span>
