@@ -176,7 +176,7 @@ export default component$(() => {
         </h1>
         <figure class="
         flex justify-center absolute 
-        top-0 right-6 w-32 h-80 z-10 
+        top-0 right-4 w-32 h-80 z-10 
         after:bg-gradient-to-b after:from-[#9046FF] after:to-[rgba(0,0,0,0)] after:w-5/6 after:absolute after:top-0 after:h-full">
           <LogoIcon className={['relative', 'top-8', 'z-[4]']} width={74} height={74} />
           <img class="absolute bottom-[-50px] scale-110" src="/imgs/pordiu.png" alt="Arturobobo" />
@@ -193,7 +193,7 @@ export default component$(() => {
         <div class="md-css" dangerouslySetInnerHTML={state.github.readme}></div>
       </div> */}
 
-      <div class="my-12">
+      <div class="my-12 mb-6">
 
         <div class="">
           <div class="flex p-4 gap-4">
@@ -220,19 +220,42 @@ export default component$(() => {
         </div>
       </div>
 
-      <div class="my-12">
+      <div class="my-6">
 
         <div class="">
           <div class="flex p-4 gap-2">
             <YoutubeIcon width={40} height={28} />
             <span class="font-medium text-lg">YouTube Videos</span>
           </div>
-          <ul class="flex">
+          <ul class="flex snap-proximity overflow-x-auto overflow-y-hidden">
             {state.youtube.videos.length &&
-              state.youtube.videos.map((video:any) => (
-                <li key={video.id.videoId}>
-                  <img class="" src={video.snippet.thumbnails.high.url} alt="" />
-                  <span>{video.snippet.title}</span>
+              state.youtube.videos.map((video: any) => (
+                <li class="flex snap-center basis-[42%] shrink-0 relative p-2" key={video.id.videoId}>
+                  <div class="relative">
+                    <img class="h-[360px] rounded-xl object-center object-cover" src={video.snippet.thumbnails.high.url} alt="" />
+                    <div class="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0)] absolute top-0 left-0 h-full w-full z-2 rounded-xl">
+                      <span class="absolute bottom-4 p-2 font-medium text-xs">{video.snippet.title}</span>
+                    </div>
+                  </div>
+
+                </li>
+              )) || ``}
+          </ul>
+        </div>
+      </div>
+
+      <div class="my-6">
+
+        <div class="">
+          <div class="flex p-4 gap-2">
+            <GithubIcon width={40} height={28} />
+            <span class="font-medium text-lg">Github Repos</span>
+          </div>
+          <ul class="flex flex-col overflow-x-auto overflow-y-hidden">
+            {state.github.repos &&
+              state.github.repos.slice(0, 4).map((repo: any) => (
+                <li key={repo.id} onClick$={() => getMarkdown(repo.url)}>
+                  {repo.name}
                 </li>
               )) || ``}
           </ul>
@@ -254,12 +277,7 @@ export default component$(() => {
           ))}
       </ul>
       <ul class="repos-list-container hidden">
-        {state.github.repos &&
-          state.github.repos.map((repo) => (
-            <li key={repo.id} onClick$={() => getMarkdown(repo.url)}>
-              {repo.name}
-            </li>
-          ))}
+
       </ul>
     </div>
   );
