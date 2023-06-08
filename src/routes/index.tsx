@@ -15,6 +15,7 @@ import mdStyles from "../utils/md-css.css";
 import { YoutubeIcon } from "~/icons/youtube-icon";
 import { GithubIcon } from "~/icons/github-icon";
 import { TwitchIcon } from "~/icons/twitch-icon";
+import { LogoIcon } from "~/icons/logo-icon";
 
 const twitchDataInfo = $(async function (
   name: string,
@@ -78,12 +79,12 @@ async function obtenerShortsYVideosDeCanal(
 
 export default component$(() => {
   useStylesScoped$(mdStyles);
-  useStylesScoped$(styles);
+  // useStylesScoped$(styles);
 
   const state = useStore<any>({
-    apiUrl: "https://api.github.com/users/arturozarzalejo",
-    apiUrlLocal: "/api-github-mock.json",
+    apiGithubUrl: "https://api.github.com/users/arturozarzalejo",
     apiGithubMock: "http://localhost:5173/server/api-github-mock.json",
+    apiGithubReposMock: "http://localhost:5173/server/api-github-repos.json",
     apiYoutubeMock: "http://localhost:5173/server/api-youtube-mock.json",
     dataServerJson: {},
     github: {
@@ -102,9 +103,7 @@ export default component$(() => {
   });
 
   const getMarkdown = $(async (repoURL: string) => {
-    const markdown = new MarkdownIt({
-      encoding: "utf-8",
-    });
+    const markdown = new MarkdownIt();
     const readme = await fetch(`${repoURL}/readme`)
       .then((data) => data.json())
       .then((data) => data);
@@ -115,8 +114,8 @@ export default component$(() => {
   });
 
   const getRepos = $(async () => {
-    const repos = await fetch(
-      `https://api.github.com/users/ArturoZarzalejo/repos`
+    return fetch(
+      state.apiGithubReposMock
     )
       .then((response) => response.json())
       .then((data) => data)
@@ -125,11 +124,6 @@ export default component$(() => {
         console.log("Error:", error);
       });
 
-    state.github.repos = repos.sort((a, b) =>
-      b.pushed_at.localeCompare(a.pushed_at)
-    );
-
-    console.log("click tontorrón", repos, state);
   });
 
   useTask$(async () => {
@@ -140,6 +134,7 @@ export default component$(() => {
         // Manejo de errores
         console.log("Error:", error);
       });
+
   });
 
   useVisibleTask$(async ({ cleanup }) => {
@@ -152,6 +147,12 @@ export default component$(() => {
       state
     );
 
+    const repos = await getRepos()
+
+    state.github.repos = repos.sort((a, b) =>
+      b.pushed_at.localeCompare(a.pushed_at)
+    );
+
     const apiTwitch = new Twitch();
     state.twitch.token = await apiTwitch.getToken();
     await twitchDataInfo("ArturoDevelop", state, apiTwitch);
@@ -162,31 +163,43 @@ export default component$(() => {
   return (
     <div class="text-white">
       <img
-        class={`img-rounded ${
-          state.twitch.streams.data &&
+        class={`img-rounded hidden ${state.twitch.streams.data &&
           state.twitch.streams.data[0].type === "live" &&
           `live-image`
-        }`}
+          }`}
         src={state.dataServerJson.avatar_url}
         alt=""
       />
+      <header class="p-6">
+        <h1 class="text-5xl font-semibold leading-tight tracking-wide max-w-[230px]">
+          {state.dataServerJson.name}
+        </h1>
+        <figure class="
+        flex justify-center absolute 
+        top-0 right-6 w-32 h-80 z-10 
+        after:bg-gradient-to-b after:from-[#9046FF] after:to-[rgba(0,0,0,0)] after:w-5/6 after:absolute after:top-0 after:h-full">
+          <LogoIcon className={['relative', 'top-8', 'z-[4]']} width={74} height={74} />
+          <img class="absolute bottom-[-50px] scale-110" src="/imgs/pordiu.png" alt="Arturobobo" />
+        </figure>
 
-      {/* <div role="presentation" class="ellipsis"></div> */}
-      <h1 class="text-3xl">
-        {state.dataServerJson.name}
-      </h1>
-      <div class="card card-background-color card-box-shadow card-border-radius">
+        <p class="text-2xl font-medium flex flex-col mt-24">
+          <span class="">Front End <b class="text-[#9046FF]">Developer</b></span>
+          <span class="">Content <b class="text-[#ECFF15]">Creator</b></span>
+          <span class="">Tech <b class="text-[#DF3939]">Lover</b></span>
+        </p>
+      </header>
+
+      {/* <div class="card card-background-color card-box-shadow card-border-radius">
         <div class="md-css" dangerouslySetInnerHTML={state.github.readme}></div>
-      </div>
-      <p>
-        Muy buenas!! Bienvenido a parte de mi vida, probablemente, ahora mismo
-        esté haciendo stream, si no es así, me pillarás trabajando, comiendo
-        como un gordito, o en el gimnasio para poder comer más. Aquí te dejo mis
-        diferentes proyectos y información sobre mi, podrás ver mis videos de
-        youtube o ver mis proyectos en Github{" "}
-      </p>
-      <div>
-        <div class="card card-background-color card-box-shadow card-border-radius">
+      </div> */}
+
+      <div class="my-12">
+
+        <div class="">
+          <div class="flex p-4 gap-4">
+            <TwitchIcon width={28} height={28} />
+            <span class="font-medium text-lg">Twitch</span>
+          </div>
           {(state.twitch.streams.data && state.twitch.streams.data.length && (
             <img
               class="thumbnail-twitch card-border-radius"
@@ -198,17 +211,40 @@ export default component$(() => {
             />
           )) ||
             ``}
+          {(state.twitch.userInfo.data && state.twitch.userInfo.data.length && (
+            <div class="flex p-4 gap-4 justify-center">
+              <img class="w-12 h-12 rounded-lg" src={state.twitch.userInfo.data[0].profile_image_url} alt={state.twitch.userInfo.data[0].display_name} />
+              <span class=" flex items-center font-medium text-sm leading-tight">{state.twitch.streams.data[0].title}</span>
+            </div>
+          )) || ``}
         </div>
       </div>
 
-      <div class="icons-socials">
-        <TwitchIcon />
-        <button onClick$={() => getRepos()}>
-          <GithubIcon />
-        </button>
-        <YoutubeIcon />
+      <div class="my-12">
+
+        <div class="">
+          <div class="flex p-4 gap-2">
+            <YoutubeIcon width={40} height={28} />
+            <span class="font-medium text-lg">YouTube Videos</span>
+          </div>
+          <ul class="flex">
+            {state.youtube.videos.length &&
+              state.youtube.videos.map((video:any) => (
+                <li key={video.id.videoId}>
+                  <img class="" src={video.snippet.thumbnails.high.url} alt="" />
+                  <span>{video.snippet.title}</span>
+                </li>
+              )) || ``}
+          </ul>
+        </div>
       </div>
-      <ul class="repos-list-container">
+
+      {/* <div class="icons-socials hidden" >
+        
+        <GithubIcon />
+        <YoutubeIcon />
+      </div> */}
+      <ul class="repos-list-container hidden">
         {state.youtube.videos.length &&
           state.youtube.videos.map((video) => (
             <li key={video.id.videoId}>
@@ -217,7 +253,7 @@ export default component$(() => {
             </li>
           ))}
       </ul>
-      <ul class="repos-list-container">
+      <ul class="repos-list-container hidden">
         {state.github.repos &&
           state.github.repos.map((repo) => (
             <li key={repo.id} onClick$={() => getMarkdown(repo.url)}>

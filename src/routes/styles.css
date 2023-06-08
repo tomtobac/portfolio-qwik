@@ -31,13 +31,13 @@
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 255, 1));
 }
 
-h1 {
+/* h1 {
   margin-bottom: 60px;
-}
+} */
 
-.thumbnail-twitch {
+/* .thumbnail-twitch {
   width: 600px;
-}
+} */
 
 @keyframes live-box-shadow {
   0% {
