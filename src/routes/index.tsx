@@ -51,7 +51,7 @@ const twitchDataInfo = $(async function (
 async function obtenerShortsYVideosDeCanal(apiKey: string, channelId: string) {
   try {
     const url = `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}`;
-    // https://content-youtube.googleapis.com/youtube/v3/search?channelId=UC9h5heKFR7KaoLSzjWIIxjw&channelType=any&part=snippet&maxResults=10&key=AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM
+    // const url = `http://localhost:5173/server/api-youtube-mock.json`
 
     const response = await fetch(url);
 
@@ -150,15 +150,19 @@ export default component$(() => {
   });
 
   useVisibleTask$(async () => {
-    const apiKey = "AIzaSyDjyp6v1Zb1SV8JdeoV-rLT_rR1MONAL9U";
+    const apiKey = "AIzaSyC3O-zPANM6pcSOIY49QzaU66VJuCslKw4";
     const channelId = "UC9h5heKFR7KaoLSzjWIIxjw"; // ID del canal "arturodevelop"
+    const youtubeVideos = await obtenerShortsYVideosDeCanal(apiKey, channelId);
 
-    state.youtube.videos = await obtenerShortsYVideosDeCanal(apiKey, channelId);
+    if (youtubeVideos) {
+      state.youtube.videos = [...youtubeVideos];
 
-    state.youtube.videos.map(async (video: any) => {
-      const videoMaxRes = await obtenerThumbnailsYT(video.id.videoId, apiKey);
-      return video.snippet.thumbnails = videoMaxRes.items[0].snippet.thumbnails
-    });
+      // state.youtube.videos.map(async (video: any) => {
+      //   const videoMaxRes = await obtenerThumbnailsYT(video.id.videoId, apiKey);
+      //   return (video.snippet.thumbnails =
+      //     videoMaxRes.items[0].snippet.thumbnails);
+      // });
+    }
 
     const repos = await getRepos();
 
@@ -252,38 +256,48 @@ export default component$(() => {
         </div>
       )) ||
         ``}
-      <div class="my-6">
-        <div class="">
-          <div class="flex p-4 gap-2">
-            <YoutubeIcon width={40} height={28} />
-            <span class="font-medium text-lg">YouTube Videos</span>
-          </div>
-          <ul class="flex snap-proximity overflow-x-auto overflow-y-hidden">
-            {(state.youtube.videos.length &&
-              state.youtube.videos.map((video: any) => (
+
+      {(state.youtube.videos.length && (
+        <div class="my-6">
+          <div class="">
+            <div class="flex p-4 gap-2">
+              <YoutubeIcon width={40} height={28} fill="#FF0000" />
+              <span class="font-medium text-lg">YouTube Videos</span>
+            </div>
+            <ul class="flex snap-proximity overflow-x-auto overflow-y-hidden">
+              {state.youtube.videos.map((video: any) => (
                 <li
-                  class="flex snap-center basis-[42%] shrink-0 relative p-2"
+                  class="flex snap-center basis-[46%] shrink-0 relative p-2"
                   key={video.id.videoId}
+                  onClick$={() =>
+                    window.open(
+                      "https://www.youtube.com/shorts/" + video.id.videoId
+                    )
+                  }
                 >
                   <div class="relative">
                     <img
-                      class="h-[360px] rounded-xl object-center object-cover"
-                      src={video.snippet.thumbnails.maxres.url}
+                      class="h-[380px] rounded-xl object-center object-cover"
+                      src={video.snippet.thumbnails.maxres && video.snippet.thumbnails.maxres.url || video.snippet.thumbnails.high.url}
                       alt=""
                     />
                     <div class="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0)] absolute top-0 left-0 h-full w-full z-2 rounded-xl">
+                      <div class="flex justify-center items-center h-full">
+                        <YoutubeIcon fill={"rgba(0,0,0,0.8)"} width={82} height={82} />
+                      </div>
+
                       <span class="absolute bottom-4 p-2 font-medium text-xs">
                         {video.snippet.title}
                       </span>
                     </div>
                   </div>
                 </li>
-              ))) ||
-              ``}
-          </ul>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-
+      )) ||
+        ``}
       <div class="my-6">
         <div class="">
           <div class="flex p-4 gap-2">
@@ -301,22 +315,6 @@ export default component$(() => {
           </ul>
         </div>
       </div>
-
-      {/* <div class="icons-socials hidden" >
-        
-        <GithubIcon />
-        <YoutubeIcon />
-      </div> */}
-      <ul class="repos-list-container hidden">
-        {state.youtube.videos.length &&
-          state.youtube.videos.map((video: any) => (
-            <li key={video.id.videoId}>
-              <img class="" src={video.snippet.thumbnails.high.url} alt="" />
-              <span>{video.snippet.title}</span>
-            </li>
-          ))}
-      </ul>
-      <ul class="repos-list-container hidden"></ul>
     </div>
   );
 });
