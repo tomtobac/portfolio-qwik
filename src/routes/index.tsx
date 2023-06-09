@@ -306,23 +306,24 @@ export default component$(() => {
         </div>
       )) ||
         ``}
-      <div class="my-6">
-        <div class="">
-          <div class="flex p-4 gap-2">
-            <GithubIcon width={40} height={28} />
-            <span class="font-medium text-lg">Github Repos</span>
-          </div>
-          <ul class="flex flex-col overflow-x-auto overflow-y-hidden">
-            {(state.github.repos &&
-              state.github.repos.slice(0, 4).map((repo: any) => (
+
+      {state.github.repos.length && (
+        <div class="my-6">
+          <div class="">
+            <div class="flex p-4 gap-2">
+              <GithubIcon width={40} height={28} />
+              <span class="font-medium text-lg">Github Repos</span>
+            </div>
+            <ul class="flex flex-col overflow-x-auto overflow-y-hidden">
+              {state.github.repos.slice(0, 4).map((repo: any) => (
                 <li key={repo.id} onClick$={() => getMarkdown(repo.url)}>
                   {repo.name}
                 </li>
-              ))) ||
-              ``}
-          </ul>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
+      ) || ``}
     </div>
   );
 });
