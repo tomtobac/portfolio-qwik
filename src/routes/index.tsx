@@ -278,12 +278,20 @@ export default component$(() => {
                   <div class="relative">
                     <img
                       class="h-[380px] rounded-xl object-center object-cover"
-                      src={video.snippet.thumbnails.maxres && video.snippet.thumbnails.maxres.url || video.snippet.thumbnails.high.url}
+                      src={
+                        (video.snippet.thumbnails.maxres &&
+                          video.snippet.thumbnails.maxres.url) ||
+                        video.snippet.thumbnails.high.url
+                      }
                       alt=""
                     />
                     <div class="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0)] absolute top-0 left-0 h-full w-full z-2 rounded-xl">
                       <div class="flex justify-center items-center h-full">
-                        <YoutubeIcon fill={"rgba(0,0,0,0.8)"} width={82} height={82} />
+                        <YoutubeIcon
+                          fill={"rgba(0,0,0,0.8)"}
+                          width={82}
+                          height={82}
+                        />
                       </div>
 
                       <span class="absolute bottom-4 p-2 font-medium text-xs">
@@ -320,5 +328,5 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Qwik Flower",
+  title: "Arturo Zarzalejo",
 };
