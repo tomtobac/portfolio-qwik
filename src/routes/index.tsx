@@ -73,24 +73,24 @@ async function obtenerShortsYVideosDeCanal(apiKey: string, channelId: string) {
   }
 }
 
-async function obtenerThumbnailsYT(videoId: string, API_KEY: string) {
-  try {
-    const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`;
+// async function obtenerThumbnailsYT(videoId: string, API_KEY: string) {
+//   try {
+//     const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`;
 
-    const response = await fetch(url);
+//     const response = await fetch(url);
 
-    if (!response.ok) {
-      throw new Error("Error al obtener los shorts y videos");
-    }
+//     if (!response.ok) {
+//       throw new Error("Error al obtener los shorts y videos");
+//     }
 
-    const data = await response.json();
+//     const data = await response.json();
 
-    // console.log("videos:", videos);
-    return data;
-  } catch (error) {
-    console.error("Error al obtener los shorts y videos:", error);
-  }
-}
+//     // console.log("videos:", videos);
+//     return data;
+//   } catch (error) {
+//     console.error("Error al obtener los shorts y videos:", error);
+//   }
+// }
 
 export default component$(() => {
   useStylesScoped$(mdStyles);
