@@ -382,4 +382,10 @@ export default component$(() => {
 
 export const head: DocumentHead = {
   title: "Arturo Zarzalejo",
+  links: [
+    {
+      rel: 'stylesheet',
+      href: 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css',
+    },
+  ],
 };
