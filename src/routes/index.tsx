@@ -120,7 +120,8 @@ export default component$(() => {
       'html': 'devicon-html5-plain colored',
       'typescript': 'devicon-typescript-plain colored',
       'css': 'devicon-css3-plain colored'
-    }
+    },
+    loading: false
   });
 
   const getMarkdown = $(async (repoURL: string) => {
@@ -179,6 +180,7 @@ export default component$(() => {
   });
 
   useVisibleTask$(async () => {
+    state.loading = true
     state.dataServerJson = await fetch(state.apiGithubUrl)
       .then((response) => response.json())
       .then((data) => data)
@@ -211,9 +213,11 @@ export default component$(() => {
     await twitchDataInfo("ArturoDevelop", state, apiTwitch);
 
     console.log("cositas?", state);
+
+    state.loading = true
   });
 
-  return (
+  return (state.loading && 
     <div class="text-white">
       <img
         class={`img-rounded hidden ${state.twitch.streams.data &&
