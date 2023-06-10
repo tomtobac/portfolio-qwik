@@ -51,7 +51,7 @@ const twitchDataInfo = $(async function (
 async function obtenerShortsYVideosDeCanal(apiKey: string, channelId: string, dev: Boolean) {
   try {
 
-    const url = dev ? `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}` : `http://localhost:5173/server/api-youtube-mock.json`;
+    const url = dev ? `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}` : `/mocks/api-youtube-mock.json`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -97,10 +97,10 @@ export default component$(() => {
 
   const state = useStore<any>({
     apiGithubUrl: "https://api.github.com/users/arturozarzalejo",
-    apiGithubMock: "http://localhost:5173/server/api-github-mock.json",
+    apiGithubMock: "/mocks/api-github-mock.json",
     apiGithubRepos: "https://api.github.com/users/arturozarzalejo/repos",
-    apiGithubReposMock: "http://localhost:5173/server/api-github-repos.json",
-    apiYoutubeMock: "http://localhost:5173/server/api-youtube-mock.json",
+    apiGithubReposMock: "/mocks/api-github-repos.json",
+    apiYoutubeMock: "/mocks/api-youtube-mock.json",
     dataServerJson: {},
     github: {
       repos: [],
@@ -169,6 +169,16 @@ export default component$(() => {
 
 
   useTask$(async () => {
+    // state.dataServerJson = await fetch(state.apiGithubMock)
+    //   .then((response) => response.json())
+    //   .then((data) => data)
+    //   .catch((error) => {
+    //     // Manejo de errores
+    //     console.log("Error:", error);
+    //   });
+  });
+
+  useVisibleTask$(async () => {
     state.dataServerJson = await fetch(state.apiGithubMock)
       .then((response) => response.json())
       .then((data) => data)
@@ -176,9 +186,6 @@ export default component$(() => {
         // Manejo de errores
         console.log("Error:", error);
       });
-  });
-
-  useVisibleTask$(async () => {
     const apiKey = "AIzaSyC3O-zPANM6pcSOIY49QzaU66VJuCslKw4";
     const channelId = "UC9h5heKFR7KaoLSzjWIIxjw"; // ID del canal "arturodevelop"
     const youtubeVideos = await obtenerShortsYVideosDeCanal(apiKey, channelId, true);
