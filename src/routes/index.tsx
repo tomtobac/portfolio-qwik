@@ -220,7 +220,7 @@ export default component$(() => {
   return (state.loading && 
     <div class="text-white">
       <img
-        class={`img-rounded hidden ${state.twitch.streams.data &&
+        class={`img-rounded hidden ${state.twitch.streams.data.length &&
           state.twitch.streams.data[0].type === "live" &&
           `live-image`
           }`}
