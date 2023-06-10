@@ -179,7 +179,7 @@ export default component$(() => {
   });
 
   useVisibleTask$(async () => {
-    state.dataServerJson = await fetch(state.apiGithubMock)
+    state.dataServerJson = await fetch(state.apiGithubUrl)
       .then((response) => response.json())
       .then((data) => data)
       .catch((error) => {
