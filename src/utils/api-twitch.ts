@@ -14,7 +14,8 @@ type ResponseType = {
     private channelChatBadges?: any;
     private category: any;
     private schedule: any;
-    streams: boolean | undefined;
+    private streams: any | undefined;
+    private videos: any | undefined;
   
     constructor() {
       if (!Twitch.instance) {
@@ -246,6 +247,29 @@ type ResponseType = {
         .then((response: ResponseType) => response.json())
         .catch((error) => console.error(error));
     }
+
+    async getVideos(
+      userID: string,
+      accessToken: string,
+      forceReload = false
+    ): Promise<any> {
+      const endpoint = `https://api.twitch.tv/helix/videos?user_id=${userID}`;
+  
+      if (this.videos && !forceReload) {
+        return this.videos;
+      }
+  
+      return fetch(endpoint, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Client-Id": `${this.clientID}`,
+        },
+      })
+        .then((response: ResponseType) => response.json())
+        .catch((error) => console.error(error));
+    }
+  
   
     async getStreams(
       userID: string,

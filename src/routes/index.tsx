@@ -46,12 +46,23 @@ const twitchDataInfo = $(async function (
     state.twitch.token.access_token,
     true
   );
+
+  state.twitch.videos = await apiTwitch.getVideos(
+    state.twitch.userInfo.data[0].id,
+    state.twitch.token.access_token,
+    true
+  );
 });
 
-async function obtenerShortsYVideosDeCanal(apiKey: string, channelId: string, dev: Boolean) {
+async function obtenerShortsYVideosDeCanal(
+  apiKey: string,
+  channelId: string,
+  dev: Boolean
+) {
   try {
-
-    const url = dev ? `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}` : `/mocks/api-youtube-mock.json`;
+    const url = dev
+      ? `https://www.googleapis.com/youtube/v3/search?channelId=${channelId}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${apiKey}`
+      : `/mocks/api-youtube-mock.json`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -101,8 +112,8 @@ export default component$(() => {
     apiGithubRepos: "https://api.github.com/users/arturozarzalejo/repos",
     apiGithubReposMock: "/mocks/api-github-repos.json",
     apiYoutubeMock: "/mocks/api-youtube-mock.json",
-    dataServerJson: {},
     github: {
+      info: {},
       repos: [],
     },
     twitch: {
@@ -116,12 +127,12 @@ export default component$(() => {
       videos: [],
     },
     iconsMatch: {
-      'javascript': 'devicon-javascript-plain colored',
-      'html': 'devicon-html5-plain colored',
-      'typescript': 'devicon-typescript-plain colored',
-      'css': 'devicon-css3-plain colored'
+      javascript: "devicon-javascript-plain colored",
+      html: "devicon-html5-plain colored",
+      typescript: "devicon-typescript-plain colored",
+      css: "devicon-css3-plain colored",
     },
-    loading: false
+    loading: false,
   });
 
   const getMarkdown = $(async (repoURL: string) => {
@@ -166,11 +177,10 @@ export default component$(() => {
     } else {
       return "hace unos segundos";
     }
-  }
-
+  };
 
   useTask$(async () => {
-    // state.dataServerJson = await fetch(state.apiGithubMock)
+    // state.github.info = await fetch(state.apiGithubMock)
     //   .then((response) => response.json())
     //   .then((data) => data)
     //   .catch((error) => {
@@ -180,8 +190,8 @@ export default component$(() => {
   });
 
   useVisibleTask$(async () => {
-    state.loading = true
-    state.dataServerJson = await fetch(state.apiGithubUrl)
+    state.loading = true;
+    state.github.info = await fetch(state.apiGithubUrl)
       .then((response) => response.json())
       .then((data) => data)
       .catch((error) => {
@@ -190,7 +200,11 @@ export default component$(() => {
       });
     const apiKey = "AIzaSyC3O-zPANM6pcSOIY49QzaU66VJuCslKw4";
     const channelId = "UC9h5heKFR7KaoLSzjWIIxjw"; // ID del canal "arturodevelop"
-    const youtubeVideos = await obtenerShortsYVideosDeCanal(apiKey, channelId, true);
+    const youtubeVideos = await obtenerShortsYVideosDeCanal(
+      apiKey,
+      channelId,
+      true
+    );
 
     if (youtubeVideos) {
       state.youtube.videos = [...youtubeVideos];
@@ -214,180 +228,270 @@ export default component$(() => {
 
     console.log("cositas?", state);
 
-    state.loading = true
+    state.loading = true;
   });
 
-  return (state.loading && 
-    <div class="text-white">
-      <img
-        class={`img-rounded hidden ${state.twitch.streams.data.length &&
-          state.twitch.streams.data[0].type === "live" &&
-          `live-image`
+  return (
+    state.loading && (
+      <div class="text-white">
+        <img
+          class={`img-rounded hidden ${
+            state.twitch.streams.data.length &&
+            state.twitch.streams.data[0].type === "live" &&
+            `live-image`
           }`}
-        src={state.dataServerJson.avatar_url}
-        alt=""
-      />
-      <header class="p-6">
-        <h1 class="text-5xl font-semibold leading-tight tracking-wide max-w-[230px]">
-          {state.dataServerJson.name}
-        </h1>
-        <figure
-          class="
+          src={state.github.info.avatar_url}
+          alt=""
+        />
+        <header class="p-6">
+          <h1 class="text-5xl font-semibold leading-tight tracking-wide max-w-[230px]">
+            {state.github.info.name}
+          </h1>
+          <figure
+            class="
         flex justify-center absolute 
         top-0 right-4 w-32 h-80 z-10 
         after:bg-gradient-to-b after:from-[#9046FF] after:to-[rgba(0,0,0,0)] after:w-5/6 after:absolute after:top-0 after:h-full"
-        >
-          <LogoIcon
-            classList={["relative", "top-8", "z-[4]"]}
-            width={74}
-            height={74}
-          />
-          <img
-            class="absolute bottom-[-50px] scale-110"
-            src="/imgs/pordiu.png"
-            alt="Arturobobo"
-          />
-        </figure>
-        <p class="text-2xl font-medium flex flex-col mt-24">
-          <span class="flex gap-2">
-            Front End <b style={"--characters:9ch;"} class="text-[#9046FF] typing-general delay-[1000]">Developer</b>
-          </span>
-          <span class="flex gap-2">
-            Content <b style={"--characters:7ch; animation-delay: 0.5s;"} class="text-[#ECFF15] typing-general">Creator</b>
-          </span>
-          <span class="flex gap-2">
-            Tech <b style={"--characters:5ch; animation-delay: 1s;"} class="text-[#DF3939] typing-general">Lover</b>
-          </span>
-        </p>
-      </header>
+          >
+            <LogoIcon
+              classList={["relative", "top-8", "z-[4]"]}
+              width={74}
+              height={74}
+            />
+            <img
+              class="absolute bottom-[-70px] scale-110"
+              src="/imgs/pordiu.png"
+              alt="Arturobobo"
+            />
+          </figure>
+          <p class="text-2xl font-medium flex flex-col mt-32">
+            <span class="flex gap-2">
+              Front End{" "}
+              <b
+                style={"--characters:9ch;"}
+                class="text-[#9046FF] typing-general delay-[1000]"
+              >
+                Developer
+              </b>
+            </span>
+            <span class="flex gap-2">
+              Content{" "}
+              <b
+                style={"--characters:7ch; animation-delay: 0.5s;"}
+                class="text-[#ECFF15] typing-general"
+              >
+                Creator
+              </b>
+            </span>
+            <span class="flex gap-2">
+              Tech{" "}
+              <b
+                style={"--characters:5ch; animation-delay: 1s;"}
+                class="text-[#DF3939] typing-general"
+              >
+                Lover
+              </b>
+            </span>
+          </p>
+        </header>
 
-      {/* <div class="card card-background-color card-box-shadow card-border-radius">
+        {/* <div class="card card-background-color card-box-shadow card-border-radius">
         <div class="md-css" dangerouslySetInnerHTML={state.github.readme}></div>
       </div> */}
-      {(state.twitch.streams.data && state.twitch.streams.data.length && (
-        <div class="my-12 mb-6">
-          <div class="">
-            <div class="flex p-4 gap-4">
-              <TwitchIcon width={28} height={28} />
-              <span class="font-medium text-lg">Twitch</span>
-            </div>
+        {(state.twitch.streams.data && state.twitch.streams.data.length && (
+          <div class="my-12 mb-6">
+            <div class="">
+              <div class="flex p-4 gap-4">
+                <TwitchIcon width={28} height={28} />
+                <span class="font-medium text-lg">Twitch</span>
+              </div>
 
-            <img
-              class="thumbnail-twitch"
-              src={state.twitch.streams.data[0].thumbnail_url.replace(
-                "{width}x{height}",
-                "1920x1080"
-              )}
-              alt=""
-            />
-            <div class="flex p-4 gap-4 justify-center">
               <img
-                class="w-12 h-12 rounded-lg"
-                src={state.twitch.userInfo.data[0].profile_image_url}
-                alt={state.twitch.userInfo.data[0].display_name}
+                class="thumbnail-twitch"
+                src={state.twitch.streams.data[0].thumbnail_url.replace(
+                  "{width}x{height}",
+                  "1920x1080"
+                )}
+                alt=""
               />
-              <span class=" flex items-center font-medium text-sm leading-tight">
-                {state.twitch.streams.data[0].title}
-              </span>
+              <div class="flex p-4 gap-4 justify-center">
+                <img
+                  class="w-12 h-12 rounded-lg"
+                  src={state.twitch.userInfo.data[0].profile_image_url}
+                  alt={state.twitch.userInfo.data[0].display_name}
+                />
+                <span class=" flex items-center font-medium text-sm leading-tight">
+                  {state.twitch.streams.data[0].title}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      )) ||
-        ``}
+        )) ||
+          ``}
 
-      {(state.youtube.videos.length && (
-        <div class="my-6">
-          <div class="">
-            <div class="flex p-4 gap-2">
-              <YoutubeIcon width={40} height={28} fill="#FF0000" />
-              <span class="font-medium text-lg">YouTube Videos</span>
-            </div>
-            <ul class="flex snap-proximity overflow-x-auto overflow-y-hidden">
-              {state.youtube.videos.map((video: any) => (
-                <li
-                  class="flex snap-center basis-[46%] shrink-0 relative p-2"
-                  key={video.id.videoId}
-                  onClick$={() =>
-                    window.open(
-                      "https://www.youtube.com/shorts/" + video.id.videoId
-                    )
-                  }
-                >
-                  <div class="relative">
-                    <img
-                      class="h-[380px] rounded-xl object-center object-cover"
-                      src={
-                        (video.snippet.thumbnails.maxres &&
-                          video.snippet.thumbnails.maxres.url) ||
-                        video.snippet.thumbnails.high.url
-                      }
-                      alt=""
-                    />
-                    <div class="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0)] absolute top-0 left-0 h-full w-full z-2 rounded-xl">
-                      <div class="flex justify-center items-center h-full">
-                        <YoutubeIcon
-                          fill={"rgba(0,0,0,0.8)"}
-                          width={82}
-                          height={82}
-                        />
+        {(state.twitch.videos.data.length && (
+          <div class="my-6">
+            <div class="">
+              <div class="flex p-4 gap-2">
+                <TwitchIcon width={40} height={28} />
+                <span class="font-medium text-lg">Twitch Streams</span>
+              </div>
+              <ul class="flex snap-proximity overflow-x-auto overflow-y-hidden">
+                {state.twitch.videos.data.map((video: any) => (
+                  <li
+                    class="flex snap-center basis-[46%] shrink-0 relative p-2"
+                    key={video.id}
+                    onClick$={() => window.open(video.url)}
+                  >
+                    <div class="relative">
+                      <img
+                        class="h-[380px] rounded-xl object-center object-cover"
+                        src={video.thumbnail_url.replace(
+                          "%{width}x%{height}",
+                          "1664x936"
+                        )}
+                        alt=""
+                      />
+                      <div class="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0)] absolute top-0 left-0 h-full w-full z-2 rounded-xl">
+                        <div class="flex justify-center items-center h-full">
+                          <YoutubeIcon
+                            fill={"rgba(0,0,0,0.8)"}
+                            width={82}
+                            height={82}
+                          />
+                        </div>
+
+                        <span class="absolute bottom-4 p-2 font-medium text-xs">
+                          {video.title}
+                        </span>
                       </div>
-
-                      <span class="absolute bottom-4 p-2 font-medium text-xs">
-                        {video.snippet.title}
-                      </span>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )) ||
-        ``}
-
-      {state.github.repos.length && (
-        <div class="my-6">
-          <div class="">
-            <div class="flex p-4 gap-2">
-              <GithubIcon width={40} height={28} />
-              <span class="font-medium text-lg">Github Repos</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul class="flex flex-col overflow-x-auto overflow-y-hidden">
-              {state.github.repos.slice(0, 4).map((repo: any) => (
-                <li class="p-4 flex justify-between gap-2" key={repo.id} onClick$={() => getMarkdown(repo.url)}>
-                  <div class="flex flex-col gap-1">
-                    <span class="font-medium text-base">
-                      {repo.name}
-                    </span>
-                    <div class="flex gap-2 items-center">
-                      {repo.language && <span class="text-zinc-500 flex gap-2 items-center">
-                        <i class={`${state.iconsMatch[repo.language.toLowerCase()]} text-xl text-white`}></i>
-
-                        {repo.language}
-
-                      </span>}
-
-                      <span class="text-zinc-500">
-                        {obtenerTiempoTranscurrido(repo.updated_at)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="flex gap-2">
-                    <button onClick$={() => getMarkdown(repo.url)}>
-                      <svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M878-79 750-207v125h-60v-228h228v60H792l128 128-42 43ZM520-600h220L520-820v220ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h340l240 240v270H630v290H220Z" /></svg>
-                    </button>
-                    <button>
-                      <svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M180-81q-24 0-42-18t-18-42v-603h60v603h474v60H180Zm120-120q-24 0-42-18t-18-42v-560q0-24 18-42t42-18h440q24 0 42 18t18 42v560q0 24-18 42t-42 18H300Z" /></svg>
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
           </div>
-        </div>
-      ) || ``}
-    </div>
+        )) ||
+          ``}
+
+        {(state.youtube.videos.length && (
+          <div class="my-6">
+            <div class="">
+              <div class="flex p-4 gap-2">
+                <YoutubeIcon width={40} height={28} fill="#FF0000" />
+                <span class="font-medium text-lg">YouTube Videos</span>
+              </div>
+              <ul class="flex snap-proximity overflow-x-auto overflow-y-hidden">
+                {state.youtube.videos.map((video: any) => (
+                  <li
+                    class="flex snap-center basis-[46%] shrink-0 relative p-2"
+                    key={video.id.videoId}
+                    onClick$={() =>
+                      window.open(
+                        "https://www.youtube.com/shorts/" + video.id.videoId
+                      )
+                    }
+                  >
+                    <div class="relative">
+                      <img
+                        class="h-[380px] rounded-xl object-center object-cover"
+                        src={
+                          (video.snippet.thumbnails.maxres &&
+                            video.snippet.thumbnails.maxres.url) ||
+                          video.snippet.thumbnails.high.url
+                        }
+                        alt=""
+                      />
+                      <div class="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0)] absolute top-0 left-0 h-full w-full z-2 rounded-xl">
+                        <div class="flex justify-center items-center h-full">
+                          <YoutubeIcon
+                            fill={"rgba(0,0,0,0.8)"}
+                            width={82}
+                            height={82}
+                          />
+                        </div>
+
+                        <span class="absolute bottom-4 p-2 font-medium text-xs">
+                          {video.snippet.title}
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )) ||
+          ``}
+
+        {(state.github.repos.length && (
+          <div class="my-6">
+            <div class="">
+              <div class="flex p-4 gap-2">
+                <GithubIcon width={40} height={28} />
+                <span class="font-medium text-lg">Github Repos</span>
+              </div>
+              <ul class="flex flex-col overflow-x-auto overflow-y-hidden">
+                {state.github.repos.slice(0, 4).map((repo: any) => (
+                  <li
+                    class="p-4 flex justify-between gap-2"
+                    key={repo.id}
+                    onClick$={() => getMarkdown(repo.url)}
+                  >
+                    <div class="flex flex-col gap-1">
+                      <span class="font-medium text-base">{repo.name}</span>
+                      <div class="flex gap-2 items-center">
+                        {repo.language && (
+                          <span class="text-zinc-500 flex gap-2 items-center">
+                            <i
+                              class={`${
+                                state.iconsMatch[repo.language.toLowerCase()]
+                              } text-xl text-white`}
+                            ></i>
+
+                            {repo.language}
+                          </span>
+                        )}
+
+                        <span class="text-zinc-500">
+                          {obtenerTiempoTranscurrido(repo.updated_at)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                      <button onClick$={() => getMarkdown(repo.url)}>
+                        <svg
+                          fill="white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="24"
+                          viewBox="0 -960 960 960"
+                          width="24"
+                        >
+                          <path d="M878-79 750-207v125h-60v-228h228v60H792l128 128-42 43ZM520-600h220L520-820v220ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h340l240 240v270H630v290H220Z" />
+                        </svg>
+                      </button>
+                      <button>
+                        <svg
+                          fill="white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="24"
+                          viewBox="0 -960 960 960"
+                          width="24"
+                        >
+                          <path d="M180-81q-24 0-42-18t-18-42v-603h60v603h474v60H180Zm120-120q-24 0-42-18t-18-42v-560q0-24 18-42t42-18h440q24 0 42 18t18 42v560q0 24-18 42t-42 18H300Z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )) ||
+          ``}
+      </div>
+    )
   );
 });
 
@@ -395,8 +499,8 @@ export const head: DocumentHead = {
   title: "Arturo Zarzalejo",
   links: [
     {
-      rel: 'stylesheet',
-      href: 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css',
+      rel: "stylesheet",
+      href: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css",
     },
   ],
 };
