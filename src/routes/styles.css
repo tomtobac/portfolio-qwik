@@ -1,43 +1,21 @@
-.img-rounded {
-  border-radius: 50%;
-  width: 124px;
+.typing-general {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid transparent;
+  width: 0;
+  animation: typing 0.5s steps(5) forwards, blink-caret 0.5s step-end forwards;
 }
 
-.icons-socials {
-  justify-content: space-between;
-  max-width: 800px;
-  display: flex;
-  margin: 0 auto;
+@keyframes typing {
+  from { width: 0; }
+  to { width: var(--characters); }
 }
 
-.icons-socials button {
-  background: transparent;
+@keyframes blink-caret {
+  from, to { border-color: currentColor; }
+  100% { border-color: transparent; }
 }
-
-.icons-socials svg {
-  width: 64px;
-  height: 64px;
-  cursor: pointer;
-  background-color: transparent;
-  transition: all 0.3s ease;
-}
-
-.repos-list-container {
-  list-style: none;
-}
-
-
-.icons-socials svg:hover {
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 255, 1));
-}
-
-/* h1 {
-  margin-bottom: 60px;
-} */
-
-/* .thumbnail-twitch {
-  width: 600px;
-} */
 
 @keyframes live-box-shadow {
   0% {
@@ -60,7 +38,7 @@
   animation: live-box-shadow 1.5s infinite;
 }
 
-.card {
+/* .card {
   position: relative;
   display: flex;
   width: 600px;
@@ -89,4 +67,4 @@
   content: "";
   border-radius: inherit;
   box-shadow: inset 0 1px 1px rgba(255,255,255,.1);
-}
+} */
