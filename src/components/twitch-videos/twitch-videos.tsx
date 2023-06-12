@@ -3,6 +3,11 @@ import { TwitchIcon } from "~/icons/twitch-icon";
 import { YoutubeIcon } from "~/icons/youtube-icon";
 
 export default component$((props: any) => {
+
+  const filterVideos = props.videos.filter((video: any) => {
+    return video.thumbnail_url.indexOf('vod-secure.twitch') === -1
+  })
+
   return (
     <div class="my-6">
       <div class="">
@@ -11,7 +16,7 @@ export default component$((props: any) => {
           <span class="font-medium text-lg">Twitch Streams</span>
         </div>
         <ul class="flex snap-proximity overflow-x-auto overflow-y-hidden">
-          {props.videos.map((video: any) => (
+          {filterVideos.map((video: any) => (
             <li
               class="flex snap-center basis-[46%] shrink-0 relative p-2"
               key={video.id}

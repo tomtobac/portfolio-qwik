@@ -4,39 +4,39 @@ import MarkdownIt from "markdown-it";
 
 
 const obtenerTiempoTranscurrido = (fecha: Date) => {
-    const tiempoActual = Date.now();
-    const tiempoPasado = new Date(fecha).getTime();
-    const diferencia = tiempoActual - tiempoPasado;
+  const tiempoActual = Date.now();
+  const tiempoPasado = new Date(fecha).getTime();
+  const diferencia = tiempoActual - tiempoPasado;
 
-    const segundos = Math.floor(diferencia / 1000);
-    const minutos = Math.floor(segundos / 60);
-    const horas = Math.floor(minutos / 60);
-    const dias = Math.floor(horas / 24);
+  const segundos = Math.floor(diferencia / 1000);
+  const minutos = Math.floor(segundos / 60);
+  const horas = Math.floor(minutos / 60);
+  const dias = Math.floor(horas / 24);
 
-    if (dias > 0) {
-      return `hace ${dias} días`;
-    } else if (horas > 0) {
-      return `hace ${horas} horas`;
-    } else if (minutos > 0) {
-      return `hace ${minutos} minutos`;
-    } else {
-      return "hace unos segundos";
-    }
-  };
+  if (dias > 0) {
+    return `hace ${dias} días`;
+  } else if (horas > 0) {
+    return `hace ${horas} horas`;
+  } else if (minutos > 0) {
+    return `hace ${minutos} minutos`;
+  } else {
+    return "hace unos segundos";
+  }
+};
 
 export default component$((props: any) => {
 
-    const getMarkdown = $(async (repoURL: string) => {
-        const markdown = new MarkdownIt();
-        const readme = await fetch(`${repoURL}/readme`)
-          .then((data) => data.json())
-          .then((data) => data);
-    
-        console.log("lo que queremos", readme);
-    
-        return markdown.render(atob(readme.content));
-    
-      });
+  const getMarkdown = $(async (repoURL: string) => {
+    const markdown = new MarkdownIt();
+    const readme = await fetch(`${repoURL}/readme`)
+      .then((data) => data.json())
+      .then((data) => data);
+
+    console.log("lo que queremos", readme);
+
+    return markdown.render(atob(readme.content));
+
+  });
 
   return (
     <div class="my-6">
@@ -50,7 +50,6 @@ export default component$((props: any) => {
             <li
               class="p-4 flex justify-between gap-2"
               key={repo.id}
-              onClick$={() => getMarkdown(repo.url)}
             >
               <div class="flex flex-col gap-1">
                 <span class="font-medium text-base">{repo.name}</span>
@@ -58,9 +57,8 @@ export default component$((props: any) => {
                   {repo.language && (
                     <span class="text-zinc-500 flex gap-2 items-center">
                       <i
-                        class={`${
-                          props.iconsMatch[repo.language.toLowerCase()]
-                        } text-xl text-white`}
+                        class={`${props.iconsMatch[repo.language.toLowerCase()]
+                          } text-xl text-white`}
                       ></i>
 
                       {repo.language}
@@ -74,7 +72,7 @@ export default component$((props: any) => {
               </div>
 
               <div class="flex gap-2">
-                <button onClick$={() => getMarkdown(repo.url)}>
+                <button onClick$={() => props.copyUrlFN(repo.clone_url)}>
                   <svg
                     fill="white"
                     xmlns="http://www.w3.org/2000/svg"
