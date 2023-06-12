@@ -26,17 +26,17 @@ const obtenerTiempoTranscurrido = (fecha: Date) => {
 
 export default component$((props: any) => {
 
-  const getMarkdown = $(async (repoURL: string) => {
-    const markdown = new MarkdownIt();
-    const readme = await fetch(`${repoURL}/readme`)
-      .then((data) => data.json())
-      .then((data) => data);
+  // const getMarkdown = $(async (repoURL: string) => {
+  //   const markdown = new MarkdownIt();
+  //   const readme = await fetch(`${repoURL}/readme`)
+  //     .then((data) => data.json())
+  //     .then((data) => data);
 
-    console.log("lo que queremos", readme);
+  //   console.log("lo que queremos", readme);
 
-    return markdown.render(atob(readme.content));
+  //   return markdown.render(atob(readme.content));
 
-  });
+  // });
 
   return (
     <div class="my-6">
