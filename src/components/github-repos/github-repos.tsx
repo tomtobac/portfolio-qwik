@@ -1,6 +1,6 @@
-import { component$, $ } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import { GithubIcon } from "~/icons/github-icon";
-import MarkdownIt from "markdown-it";
+// import MarkdownIt from "markdown-it";
 
 
 const obtenerTiempoTranscurrido = (fecha: Date) => {
