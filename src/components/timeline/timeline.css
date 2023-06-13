@@ -1,0 +1,44 @@
+.test-line {
+  width: 2px;
+    background-color: #bdbdbd;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.timeline-border {
+  position: absolute;
+  width: 0px;
+  background-color: white;
+  margin: 0 auto;
+  height: 100%; /* Añadido */
+}
+
+.timeline-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  /* border-radius: 50%; */
+  background-color: white;
+  animation: timelineAnimation 2s ease-in-out forwards;
+}
+
+@keyframes timelineAnimation {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  50% {
+    height: 100%;
+    opacity: 1;
+  }
+  100% {
+    height: 100%;
+    opacity: 1;
+  }
+}

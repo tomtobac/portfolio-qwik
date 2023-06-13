@@ -15,6 +15,7 @@ import YoutubeVideos from "~/components/youtube-videos/youtube-videos";
 import TwitchVideos from "~/components/twitch-videos/twitch-videos";
 import TwitchStream from "~/components/twitch-stream/twitch-stream";
 import GithubRepos from "~/components/github-repos/github-repos";
+import Timeline from "~/components/timeline/timeline";
 
 const twitchDataInfo = $(async function (
   name: string,
@@ -181,7 +182,7 @@ export default component$(() => {
     const youtubeVideos = await obtenerShortsYVideosDeCanal(
       apiKey,
       channelId,
-      true
+      false
     );
 
     if (youtubeVideos) {
@@ -194,7 +195,7 @@ export default component$(() => {
       // });
     }
 
-    const repos = await getRepos(true);
+    const repos = await getRepos(false);
 
     state.github.repos = repos.sort((a: any, b: any) =>
       b.pushed_at.localeCompare(a.pushed_at)
@@ -273,6 +274,8 @@ export default component$(() => {
             </span>
           </p>
         </header>
+
+        <Timeline/>
 
         {(state.twitch.streams.data && state.twitch.streams.data.length && (
           <TwitchStream
