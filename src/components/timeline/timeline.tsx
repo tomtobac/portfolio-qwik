@@ -94,7 +94,9 @@ export default component$((props: any) => {
   const cositas = $(() => {});
 
   return (
-    <div class="my-6">
+    <div class="my-6 isolate relative">
+      <div class="absolute w-full h-52 -z-1 right-10 top-0 [background-image:radial-gradient(48.64%_49.21%_at_49.24%_50.03%,_theme(colors.purple.700_/_25%)_0%,_theme(colors.purple.500_/_0%)_100%)] -rotate-45" />
+      <div class="absolute w-full h-52 -z-1 left-10 bottom-0  dark:[background-image:radial-gradient(48.64%_49.21%_at_49.24%_50.03%,_theme(colors.blue.700_/_25%)_0%,_theme(colors.blue.500_/_0%)_100%)] rotate-45" />
       <div class="">
         <div class="flex p-4 gap-2">
           <GithubIcon width={40} height={28} />
