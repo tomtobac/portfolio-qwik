@@ -1,5 +1,5 @@
 import { component$, useStylesScoped$, $ } from "@builder.io/qwik";
-import { GithubIcon } from "~/icons/github-icon";
+
 import styles from "./timeline.css";
 export default component$((props: any) => {
   useStylesScoped$(styles);
@@ -35,7 +35,7 @@ export default component$((props: any) => {
       ),
       title: "Code",
       description: "Aprendemos algo nuevo?!",
-      time: "12:30",
+      time: "12:30am",
       direction: "flex-row-reverse",
     },
     {
@@ -52,7 +52,7 @@ export default component$((props: any) => {
       ),
       title: "Gym",
       description: "Mantenerse Fit!",
-      time: "14:00",
+      time: "14:00pm",
       direction: "",
     },
     {
@@ -86,11 +86,11 @@ export default component$((props: any) => {
       ),
       title: "Repetir",
       description: "",
-      time: "00:00",
+      time: "00:00pm",
       direction: "",
     },
   ];
-  const cositas = $(() => { });
+  // const cositas = $(() => { });
 
   return (
     <div class="my-12 bg-[url(/imgs/cuajao.svg)] bg-no-repeat bg-center bg-contain">

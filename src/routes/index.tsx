@@ -182,7 +182,7 @@ export default component$(() => {
     const youtubeVideos = await obtenerShortsYVideosDeCanal(
       apiKey,
       channelId,
-      false
+      true
     );
 
     if (youtubeVideos) {
@@ -195,7 +195,7 @@ export default component$(() => {
       // });
     }
 
-    const repos = await getRepos(false);
+    const repos = await getRepos(true);
 
     state.github.repos = repos.sort((a: any, b: any) =>
       b.pushed_at.localeCompare(a.pushed_at)
