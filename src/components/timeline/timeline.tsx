@@ -104,12 +104,12 @@ export default component$(() => {
           {timeline.map((item, key) => (
             <div
               key={key}
-              class={`${item.direction} flex flex-1 basis-full ${((key == 0 || key + 1 === timeline.length) && `h-28`) || ``
+              class={`${item.direction} flex flex-1 basis-full px-4 ${((key == 0 || key + 1 === timeline.length) && `h-28`) || ``
                 }`}
             >
               <div
                 class={`${!item.direction && `text-right`
-                  } grow basis-[38%] flex flex-col justify-center py-4`}
+                  || ``} grow basis-[38%] flex flex-col justify-center py-4`}
               >
                 <span class="font-medium text-xl">{item.title}</span>
                 <span class="text-base text-gray-400 font-normal">{item.description}</span>
