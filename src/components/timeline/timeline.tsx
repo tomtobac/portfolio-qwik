@@ -1,6 +1,6 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
 
-import styles from "./timeline.css";
+import styles from "./timeline.css?inline";
 export default component$(() => {
   useStylesScoped$(styles);
   const timeline = [
@@ -109,13 +109,13 @@ export default component$(() => {
             >
               <div
                 class={`${!item.direction && `text-right`
-                  || ``} grow basis-[38%] flex flex-col justify-center py-4`}
+                  || ``} grow flex-1 basis-[38%] min-w-[102px] flex flex-col justify-center py-4`}
               >
                 <span class="font-medium text-xl">{item.title}</span>
                 <span class="text-base text-gray-400 font-normal">{item.description}</span>
               </div>
               <span
-                class={`basis-[24%] items-center justify-center flex flex-col`}
+                class={` flex-1 basis-[24%] min-w-[84px] items-center justify-center flex flex-col`}
               >
                 <span
                   class={`${(!(key == 0) && ` test-line`) || `grow`}`}
@@ -130,7 +130,7 @@ export default component$(() => {
               </span>
               <div
                 class={`${item.direction && `text-right`
-                  } basis-[38%] font-light flex flex-col justify-center`}
+                  } flex-1 basis-[38%] min-w-[102px] font-light flex flex-col justify-center`}
               >
                 <span class="text-sm">{item.time}</span>
               </div>
