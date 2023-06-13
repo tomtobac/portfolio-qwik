@@ -1,14 +1,13 @@
 import { component$, useStylesScoped$, $ } from "@builder.io/qwik";
 import { GithubIcon } from "~/icons/github-icon";
 import styles from "./timeline.css";
-
 export default component$((props: any) => {
   useStylesScoped$(styles);
   const timeline = [
     {
       icon: (
         <svg
-          class="rounded-full bg-white fill-black p-2"
+          class="rounded-full bg-gradient-to-br from-zinc-50 to-red-200 fill-red-950  p-2"
           xmlns="http://www.w3.org/2000/svg"
           height="36"
           viewBox="0 -960 960 960"
@@ -25,7 +24,7 @@ export default component$((props: any) => {
     {
       icon: (
         <svg
-          class="rounded-full bg-white fill-black p-2"
+          class="rounded-full bg-gradient-to-br from-zinc-50 to-green-200 fill-green-950  p-2"
           xmlns="http://www.w3.org/2000/svg"
           height="36"
           viewBox="0 -960 960 960"
@@ -42,7 +41,7 @@ export default component$((props: any) => {
     {
       icon: (
         <svg
-          class="rounded-full bg-white fill-black p-2"
+          class="rounded-full bg-gradient-to-br from-zinc-50 to-yellow-200 fill-yellow-950  p-2"
           xmlns="http://www.w3.org/2000/svg"
           height="36"
           viewBox="0 -960 960 960"
@@ -59,7 +58,7 @@ export default component$((props: any) => {
     {
       icon: (
         <svg
-          class="rounded-full bg-white fill-black p-2"
+          class="rounded-full  bg-gradient-to-br from-zinc-50 to-purple-200 fill-purple-950 p-2"
           xmlns="http://www.w3.org/2000/svg"
           height="36"
           viewBox="0 -960 960 960"
@@ -76,7 +75,7 @@ export default component$((props: any) => {
     {
       icon: (
         <svg
-          class="rounded-full bg-white fill-black p-2"
+          class="rounded-full bg-gradient-to-br from-zinc-50 to-sky-200 fill-sky-950 p-2"
           xmlns="http://www.w3.org/2000/svg"
           height="36"
           viewBox="0 -960 960 960"
@@ -91,31 +90,29 @@ export default component$((props: any) => {
       direction: "",
     },
   ];
-  const cositas = $(() => {});
+  const cositas = $(() => { });
 
   return (
-    <div class="my-6 bg-[url(/imgs/cuajao.svg)] bg-no-repeat bg-center bg-contain">
+    <div class="my-12 bg-[url(/imgs/cuajao.svg)] bg-no-repeat bg-center bg-contain">
       <div class="">
-        <div class="flex p-4 gap-2">
-          <GithubIcon width={40} height={28} />
-          <span class="font-medium text-lg">Un día con Arturo</span>
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-20 h-20 [mask-image:_url(/imgs/icon.svg)] bg-gradient-to-br from-purple-800 via-purple-100 to-purple-800 [mask-size:100%]" />
+          <span class="bg-[linear-gradient(110.6deg,_#FFFFFF_35.15%,_theme(colors.purple.300)_83.7%)] text-transparent bg-clip-text font-semibold  text-3xl inline-block">Un día con Arturo</span>
         </div>
         <div class="timeline-border z-10 hidden"></div>
         <div class="timeline flex flex-wrap items-center relative">
           {timeline.map((item, key) => (
             <div
               key={key}
-              class={`${item.direction} flex flex-1 basis-full px-10 ${
-                ((key == 0 || key + 1 === timeline.length) && `h-28`) || ``
-              }`}
+              class={`${item.direction} flex flex-1 basis-full px-10 ${((key == 0 || key + 1 === timeline.length) && `h-28`) || ``
+                }`}
             >
               <div
-                class={`${
-                  !item.direction && `text-right`
-                } grow basis-[40%] flex flex-col justify-center py-4`}
+                class={`${!item.direction && `text-right`
+                  } grow basis-[40%] flex flex-col justify-center py-4`}
               >
-                <span class="font-semibold text-xl">{item.title}</span>
-                <span class="text-base font-normal">{item.description}</span>
+                <span class="font-medium text-xl">{item.title}</span>
+                <span class="text-base text-gray-400 font-normal">{item.description}</span>
               </div>
               <span
                 class={`basis-[20%] items-center justify-center flex flex-col`}
@@ -127,15 +124,13 @@ export default component$((props: any) => {
                 <span class="py-2">{item.icon}</span>
 
                 <span
-                  class={`${
-                    (!(key + 1 === timeline.length) && ` test-line`) || `grow`
-                  }`}
+                  class={`${(!(key + 1 === timeline.length) && ` test-line`) || `grow`
+                    }`}
                 ></span>
               </span>
               <div
-                class={`${
-                  item.direction && `text-right`
-                } basis-[40%] font-light flex flex-col justify-center`}
+                class={`${item.direction && `text-right`
+                  } basis-[40%] font-light flex flex-col justify-center`}
               >
                 <span class="text-sm">{item.time}</span>
               </div>
