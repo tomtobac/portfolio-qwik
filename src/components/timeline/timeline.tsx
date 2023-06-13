@@ -1,7 +1,7 @@
-import { component$, useStylesScoped$, $ } from "@builder.io/qwik";
+import { component$, useStylesScoped$ } from "@builder.io/qwik";
 
 import styles from "./timeline.css";
-export default component$((props: any) => {
+export default component$(() => {
   useStylesScoped$(styles);
   const timeline = [
     {
