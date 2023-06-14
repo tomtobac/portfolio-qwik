@@ -43,8 +43,10 @@
     "vite-tsconfig-paths": "4.2.0"
   },
   "dependencies": {
+    "clsx": "^1.2.1",
     "googleapis": "^118.0.0",
     "markdown-it": "^13.0.1",
+    "tailwind-merge": "^1.13.1",
     "vite-plugin-commonjs": "^0.7.1"
   }
 }
