@@ -8,6 +8,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  /* 
+   *  Unfortunally, Tailwindcss, do not support `animation-delay` utility
+   *  https://github.com/tailwindlabs/tailwindcss/discussions/3378
+   */
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+  .animation-delay-1000 {
+    animation-delay: 1s;
+  }
+}
+
 /**
  * WHAT IS THIS FILE?
  *

@@ -1,25 +1,20 @@
-import { component$, Slot, useStyles$ } from '@builder.io/qwik';
+import { component$, Slot } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
 
-import styles from './styles.css?inline';
-
 export const useServerTimeLoader = routeLoader$(() => {
-  return {
+	return {
     date: 'vale vale entendí',
   };
 });
 
-
 export default component$(() => {
-  useStyles$(styles);
-  return (
-    <>
-      {/* <Header /> */}
-      <main>
-        <Slot />
-      </main>
-      {/* <Footer /> */}
-
-    </>
-  );
+	return (
+		<>
+			{/* <Header /> */}
+			<main>
+				<Slot />
+			</main>
+			{/* <Footer /> */}
+		</>
+	);
 });

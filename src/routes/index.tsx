@@ -16,6 +16,7 @@ import TwitchVideos from "~/components/twitch-videos/twitch-videos";
 import TwitchStream from "~/components/twitch-stream/twitch-stream";
 import GithubRepos from "~/components/github-repos/github-repos";
 import Timeline from "~/components/timeline/timeline";
+import { cn } from "~/utils/cn";
 
 const twitchDataInfo = $(async function (
   name: string,
@@ -216,11 +217,11 @@ export default component$(() => {
     state.loading && (
       <div class="text-white">
         <img
-          class={`img-rounded hidden ${
-            state.twitch.streams.data.length &&
-            state.twitch.streams.data[0].type === "live" &&
-            `live-image`
-          }`}
+          class={cn("img-rounded hidden", {
+            "animate-live-image":
+              state.twitch.streams.data.length &&
+              state.twitch.streams.data[0].type === "live",
+          })}
           src={state.github.info.avatar_url}
           alt=""
         />
@@ -232,7 +233,7 @@ export default component$(() => {
             class="
         flex justify-center absolute 
         top-0 right-4 w-32 h-80 z-10 
-        after:bg-gradient-to-b after:from-[#9046FF] after:to-[rgba(0,0,0,0)] after:w-5/6 after:absolute after:top-0 after:h-full"
+        after:bg-gradient-to-b after:from-purple-600 after:to-transparent after:w-5/6 after:absolute after:top-0 after:h-full"
           >
             <LogoIcon
               classList={["relative", "top-8", "z-[4]"]}
@@ -249,8 +250,8 @@ export default component$(() => {
             <span class="flex gap-2">
               Front End{" "}
               <b
-                style={"--characters:9ch;"}
-                class="text-[#9046FF] typing-general delay-[1000]"
+                style={"--characters:9ch"}
+                class="text-purple-600 animate-typing overflow-hidden whitespace-nowrap"
               >
                 Developer
               </b>
@@ -258,8 +259,8 @@ export default component$(() => {
             <span class="flex gap-2">
               Content{" "}
               <b
-                style={"--characters:7ch; animation-delay: 0.5s;"}
-                class="text-[#ECFF15] typing-general"
+                style={"--characters:7ch"}
+                class="text-yellow-300 w-0 animate-typing animation-delay-500 overflow-hidden whitespace-nowrap"
               >
                 Creator
               </b>
@@ -267,8 +268,8 @@ export default component$(() => {
             <span class="flex gap-2">
               Tech{" "}
               <b
-                style={"--characters:5ch; animation-delay: 1s;"}
-                class="text-[#DF3939] typing-general"
+                style={"--characters:5ch"}
+                class="text-red-600 w-0 animate-typing animation-delay-1000 overflow-hidden whitespace-nowrap"
               >
                 Lover
               </b>
@@ -306,9 +307,12 @@ export default component$(() => {
           ``}
 
         <div
-          class={`snackbar fixed left-1/2 translate-x-[-50%] shadow flex bg-[#313033] rounded-xl bottom-2 justify-between shadow p-4 w-[90%] ${
-            !state.github.copyShow && `hidden`
-          }`}
+          class={cn(
+            "snackbar fixed left-1/2 translate-x-[-50%] shadow flex bg-gray-800 rounded-xl bottom-2 justify-between p-4 w-[90%]",
+            {
+              hidden: !state.github.copyShow,
+            }
+          )}
         >
           <span class="font-medium text-base">Copiado al portapapeles</span>
           <button>X</button>
