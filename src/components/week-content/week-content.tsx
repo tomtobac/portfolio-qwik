@@ -1,7 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { TwitchIcon } from "~/icons/twitch-icon";
 
-export default component$((props: any) => {
+export default component$(() => {
   return (
     <div class="my-6">
       <div class="">
