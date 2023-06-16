@@ -97,22 +97,28 @@ export default component$(() => {
       <div class="">
         <div class="flex flex-col items-center gap-2">
           <div class="w-20 h-20 [mask-image:_url(/imgs/icon.svg)] bg-gradient-to-br from-purple-800 via-purple-100 to-purple-800 [mask-size:100%]" />
-          <span class="bg-[linear-gradient(110.6deg,_#FFFFFF_35.15%,_theme(colors.purple.300)_83.7%)] text-transparent bg-clip-text font-semibold  text-3xl inline-block">Un día con Arturo</span>
+          <span class="bg-[linear-gradient(110.6deg,_#FFFFFF_35.15%,_theme(colors.purple.300)_83.7%)] text-transparent bg-clip-text font-semibold  text-3xl inline-block">
+            Un día con Arturo
+          </span>
         </div>
         <div class="timeline-border z-10 hidden"></div>
         <div class="timeline flex flex-wrap items-center relative">
           {timeline.map((item, key) => (
             <div
               key={key}
-              class={`${item.direction} flex flex-1 basis-full px-4 ${((key == 0 || key + 1 === timeline.length) && `h-28`) || ``
-                }`}
+              class={`${item.direction} flex flex-1 basis-full px-4 ${
+                ((key == 0 || key + 1 === timeline.length) && `h-28`) || ``
+              }`}
             >
               <div
-                class={`${!item.direction && `text-right`
-                  || ``} grow flex-1 basis-[38%] min-w-[102px] flex flex-col justify-center py-4`}
+                class={`${
+                  (!item.direction && `text-right`) || ``
+                } grow flex-1 basis-[38%] min-w-[102px] flex flex-col justify-center py-4`}
               >
                 <span class="font-medium text-xl">{item.title}</span>
-                <span class="text-base text-gray-400 font-normal">{item.description}</span>
+                <span class="text-base text-gray-400 font-normal">
+                  {item.description}
+                </span>
               </div>
               <span
                 class={` flex-1 basis-[24%] min-w-[84px] items-center justify-center flex flex-col`}
@@ -124,13 +130,15 @@ export default component$(() => {
                 <span class="py-2">{item.icon}</span>
 
                 <span
-                  class={`${(!(key + 1 === timeline.length) && ` test-line`) || `grow`
-                    }`}
+                  class={`${
+                    (!(key + 1 === timeline.length) && ` test-line`) || `grow`
+                  }`}
                 ></span>
               </span>
               <div
-                class={`${item.direction && `text-right`
-                  } flex-1 basis-[38%] min-w-[102px] font-light flex flex-col justify-center`}
+                class={`${
+                  item.direction && `text-right`
+                } flex-1 basis-[38%] min-w-[102px] font-light flex flex-col justify-center`}
               >
                 <span class="text-sm">{item.time}</span>
               </div>

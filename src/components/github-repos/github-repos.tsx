@@ -2,7 +2,6 @@ import { component$ } from "@builder.io/qwik";
 import { GithubIcon } from "~/icons/github-icon";
 // import MarkdownIt from "markdown-it";
 
-
 const obtenerTiempoTranscurrido = (fecha: Date) => {
   const tiempoActual = Date.now();
   const tiempoPasado = new Date(fecha).getTime();
@@ -25,7 +24,6 @@ const obtenerTiempoTranscurrido = (fecha: Date) => {
 };
 
 export default component$((props: any) => {
-
   // const getMarkdown = $(async (repoURL: string) => {
   //   const markdown = new MarkdownIt();
   //   const readme = await fetch(`${repoURL}/readme`)
@@ -47,18 +45,16 @@ export default component$((props: any) => {
         </div>
         <ul class="flex flex-col overflow-x-auto overflow-y-hidden">
           {props.repos.slice(0, 4).map((repo: any) => (
-            <li
-              class="p-4 flex justify-between gap-2"
-              key={repo.id}
-            >
+            <li class="p-4 flex justify-between gap-2" key={repo.id}>
               <div class="flex flex-col gap-1">
                 <span class="font-medium text-base">{repo.name}</span>
                 <div class="flex gap-2 items-center">
                   {repo.language && (
                     <span class="text-zinc-500 flex gap-2 items-center">
                       <i
-                        class={`${props.iconsMatch[repo.language.toLowerCase()]
-                          } text-xl text-white`}
+                        class={`${
+                          props.iconsMatch[repo.language.toLowerCase()]
+                        } text-xl text-white`}
                       ></i>
 
                       {repo.language}

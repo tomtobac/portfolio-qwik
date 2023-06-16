@@ -16,6 +16,7 @@ import TwitchVideos from "~/components/twitch-videos/twitch-videos";
 import TwitchStream from "~/components/twitch-stream/twitch-stream";
 import GithubRepos from "~/components/github-repos/github-repos";
 import Timeline from "~/components/timeline/timeline";
+import Weekcontent from "~/components/week-content/week-content";
 import { cn } from "~/utils/cn";
 
 const twitchDataInfo = $(async function (
@@ -171,7 +172,7 @@ export default component$(() => {
   useVisibleTask$(async () => {
     console.time("cargandoHTML");
     state.loading = true;
-    state.github.info = await fetch(state.apiGithubUrl)
+    state.github.info = await fetch(state.apiGithubMock)
       .then((response) => response.json())
       .then((data) => data)
       .catch((error) => {
@@ -183,7 +184,7 @@ export default component$(() => {
     const youtubeVideos = await obtenerShortsYVideosDeCanal(
       apiKey,
       channelId,
-      true
+      false
     );
 
     if (youtubeVideos) {
@@ -196,7 +197,7 @@ export default component$(() => {
       // });
     }
 
-    const repos = await getRepos(true);
+    const repos = await getRepos(false);
 
     state.github.repos = repos.sort((a: any, b: any) =>
       b.pushed_at.localeCompare(a.pushed_at)
@@ -276,7 +277,7 @@ export default component$(() => {
             </span>
           </p>
         </header>
-
+        <Weekcontent />
         <Timeline />
 
         {(state.twitch.streams.data && state.twitch.streams.data.length && (

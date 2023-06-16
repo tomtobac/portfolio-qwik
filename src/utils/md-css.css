@@ -1,9 +1,9 @@
 /* Estilo base */
 .md-css body {
-    font-family: "Arial", sans-serif;
-    line-height: 1.6;
-    color: #ccc;
-    background-color: #1c1c1c;
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  color: #ccc;
+  background-color: #1c1c1c;
 }
 
 /* Estilo de encabezados */
@@ -13,81 +13,81 @@
 .md-css h4,
 .md-css h5,
 .md-css h6 {
-    font-weight: 600;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    color: #ccc;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #ccc;
 }
 
 /* Estilo de enlaces */
 .md-css a {
-    color: #66bfff;
-    text-decoration: none;
+  color: #66bfff;
+  text-decoration: none;
 }
 
 .md-css a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Estilo de párrafos */
 .md-css p {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 /* Estilo de listas */
 .md-css ul,
 .md-css ol {
-    padding-left: 2em;
-    margin-bottom: 1em;
+  padding-left: 2em;
+  margin-bottom: 1em;
 }
 
 .md-css li {
-    margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 /* Estilo de citas */
 .md-css blockquote {
-    margin: 0;
-    padding-left: 1em;
-    color: #999;
-    border-left: 4px solid #444;
+  margin: 0;
+  padding-left: 1em;
+  color: #999;
+  border-left: 4px solid #444;
 }
 
 /* Estilo de código */
 .md-css pre {
-    background-color: #2c2c2c;
-    color: #ccc;
-    padding: 1em;
-    overflow: auto;
+  background-color: #2c2c2c;
+  color: #ccc;
+  padding: 1em;
+  overflow: auto;
 }
 
 .md-css code {
-    background-color: #2c2c2c;
-    color: #ff79c6;
-    padding: 2px 4px;
+  background-color: #2c2c2c;
+  color: #ff79c6;
+  padding: 2px 4px;
 }
 
 /* Estilo de tablas */
 .md-css table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 1em;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1em;
 }
 
 .md-css th,
 .md-css td {
-    padding: 6px 13px;
-    border: 1px solid #444;
-    color: #ccc;
+  padding: 6px 13px;
+  border: 1px solid #444;
+  color: #ccc;
 }
 
 .md-css th {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Estilo de imágenes */
 .md-css img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 1em;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1em;
 }

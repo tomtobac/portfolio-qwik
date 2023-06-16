@@ -3,10 +3,9 @@ import { TwitchIcon } from "~/icons/twitch-icon";
 import { YoutubeIcon } from "~/icons/youtube-icon";
 
 export default component$((props: any) => {
-
   const filterVideos = props.videos.filter((video: any) => {
-    return video.thumbnail_url.indexOf('vod-secure.twitch') === -1
-  })
+    return video.thumbnail_url.indexOf("vod-secure.twitch") === -1;
+  });
 
   return (
     <div class="my-6">
