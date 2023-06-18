@@ -43,6 +43,8 @@
     "vite-tsconfig-paths": "4.2.0"
   },
   "dependencies": {
+    "@qwikest/icons": "^0.0.8",
+    "chart.js": "^4.3.0",
     "clsx": "^1.2.1",
     "googleapis": "^118.0.0",
     "markdown-it": "^13.0.1",
