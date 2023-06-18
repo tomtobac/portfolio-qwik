@@ -1,51 +1,115 @@
-import { component$ } from "@builder.io/qwik";
+import { Slot, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { TwitchIcon } from "~/icons/twitch-icon";
+import ChartJS from "chart.js/auto";
+import { IoTrendingUp } from "@qwikest/icons/ionicons";
+
+const Chart = component$(() => {
+  const canvasRef = useSignal<HTMLCanvasElement>();
+
+  useVisibleTask$(() => {
+    if (!canvasRef.value) return;
+    const ctx = canvasRef.value.getContext("2d");
+    if (!ctx) return;
+    const gradient = ctx.createLinearGradient(0, 0, 0, 100);
+    gradient.addColorStop(0, "#5F439E");
+    gradient.addColorStop(0.6, "rgba(95, 67, 158, 0.1)");
+
+    const data = [10, 30, 20, 30, 30, 40, 30];
+
+    new ChartJS(canvasRef.value, {
+      type: "line",
+      data: {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        datasets: [
+          {
+            label: "Views",
+            data: data,
+            borderColor: "#5F439E",
+            backgroundColor: gradient,
+            tension: 0.3,
+            fill: "start",
+            pointRadius(ctx) {
+              if (ctx.dataIndex === data.length - 1) {
+                return 4;
+              }
+              return 0;
+            },
+            borderCapStyle: "round",
+            borderWidth: 2,
+            pointBackgroundColor: "#FFF",
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            display: false,
+          },
+          y: {
+            display: false,
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+      },
+    });
+  });
+
+  return (
+    <div class="w-full">
+      <canvas width={100} ref={canvasRef} />
+    </div>
+  );
+});
+
+const Card = component$<{}>(() => {
+  return (
+    <article class="bg-stone-900 border border-stone-800 shadow-2xl rounded">
+      <Slot />
+    </article>
+  );
+});
+
+const SocialMediaStats = component$<{}>(() => {
+  return (
+    <Card>
+      <div class="flex gap-3 p-4">
+        <div class="flex flex-col justify-between flex-shrink-0">
+          <div class="mb-4 flex gap-2">
+            <TwitchIcon width={40} height={28} />
+            <span class="text-lg font-bold">Twitch</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-slate-400 text-xs">Total Views</span>
+            <span class="text-white font-bold font-mono text-3xl">23k</span>
+          </div>
+        </div>
+        <div class="flex-grow flex flex-col gap-3 items-end">
+          <div class="flex flex-col">
+            <div class="flex align-middle gap-2">
+              <IoTrendingUp class="text-green-400" />
+              <span class="text-sm font-mono text-right">12.5%</span>
+            </div>
+            <span class="text-slate-400 text-xs">vs last week</span>
+          </div>
+          <Chart />
+        </div>
+      </div>
+    </Card>
+  );
+});
 
 export default component$(() => {
   return (
-    <div class="my-6">
-      <div class="">
-        <div class="flex p-4 gap-2">
-          <TwitchIcon width={40} height={28} />
-          <span class="font-medium text-lg">Twitch</span>
-
-        </div>
-        <div class="flex flex-col sm:flex-row basis-full">
-          <div class="flex p-2 w-full">
-            <div class="flex flex-col">
-              <span>Stadistics</span>
-              <span>Total View Count</span>
-              <span>3000</span>
-            </div>
-            <div class="">
-              <img src="" alt="" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512"><path d="M176 64h64v384h-64z" fill="currentColor" /><path d="M80 336h64v112H80z" fill="currentColor" /><path d="M272 272h64v176h-64z" fill="currentColor" /><path d="M368 176h64v272h-64z" fill="currentColor" /></svg>
-            </div>
-          </div>
-          <div class="flex p-2 w-full">
-            <div class="flex flex-col">
-              <span>Stadistics</span>
-              <span>Total View Count</span>
-              <span>3000</span>
-            </div>
-            <div class="">
-              <img src="" alt="" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512"><path d="M176 64h64v384h-64z" fill="currentColor" /><path d="M80 336h64v112H80z" fill="currentColor" /><path d="M272 272h64v176h-64z" fill="currentColor" /><path d="M368 176h64v272h-64z" fill="currentColor" /></svg>
-            </div>
-          </div>
-          <div class="flex p-2 w-full">
-            <div class="flex flex-col">
-              <span>Stadistics</span>
-              <span>Total View Count</span>
-              <span>3000</span>
-            </div>
-            <div class="">
-              <img src="" alt="" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512"><path d="M176 64h64v384h-64z" fill="currentColor" /><path d="M80 336h64v112H80z" fill="currentColor" /><path d="M272 272h64v176h-64z" fill="currentColor" /><path d="M368 176h64v272h-64z" fill="currentColor" /></svg>
-            </div>
-          </div>
-        </div>
-
+    <div class="my-12 px-3 flex">
+      <div class="flex flex-col sm:flex-row gap-3 w-full">
+        <SocialMediaStats />
+        {/* <SocialMediaStats />
+        <SocialMediaStats /> */}
       </div>
     </div>
   );
