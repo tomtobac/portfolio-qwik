@@ -14,6 +14,8 @@ import { LogoIcon } from "~/icons/logo-icon";
 import YoutubeVideos from "~/components/youtube-videos/youtube-videos";
 import TwitchVideos from "~/components/twitch-videos/twitch-videos";
 import TwitchStream from "~/components/twitch-stream/twitch-stream";
+import { TwitchIcon } from "~/icons/twitch-icon";
+
 import GithubRepos from "~/components/github-repos/github-repos";
 import Timeline from "~/components/timeline/timeline";
 import Weekcontent from "~/components/week-content/week-content";
@@ -104,6 +106,11 @@ async function obtenerShortsYVideosDeCanal(
 //     console.error("Error al obtener los shorts y videos:", error);
 //   }
 // }
+
+const totalTwitchViews = arrayVideos => arrayVideos.reduce((acumulator, video) => {
+  return acumulator + video.view_count;
+}, 0);
+
 
 export default component$(() => {
   useStylesScoped$(mdStyles);
@@ -207,6 +214,10 @@ export default component$(() => {
     state.twitch.token = await apiTwitch.getToken();
     await twitchDataInfo("ArturoDevelop", state, apiTwitch);
 
+    state.twitch.totalViewCount = totalTwitchViews(state.twitch.videos.data)
+
+    // console.log(state.twitch.totalTwitchViews);
+
     console.log("cositas?", state);
 
     state.loading = true;
@@ -277,7 +288,7 @@ export default component$(() => {
             </span>
           </p>
         </header>
-        <Weekcontent />
+        <Weekcontent icon={<TwitchIcon/>} totalViewCount={state.twitch.totalViewCount} />
         <Timeline />
 
         {(state.twitch.streams.data && state.twitch.streams.data.length && (

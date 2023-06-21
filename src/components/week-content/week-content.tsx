@@ -1,7 +1,24 @@
-import { Slot, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { TwitchIcon } from "~/icons/twitch-icon";
+import { JSXNode, Slot, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+// import { TwitchIcon } from "~/icons/twitch-icon";
 import ChartJS from "chart.js/auto";
 import { IoTrendingUp } from "@qwikest/icons/ionicons";
+
+interface SocialMediaStatsProps {
+  totalViewCount: number;
+  platform: string;
+  icon: JSXNode 
+}
+
+const transformarNumero = (numero:number) => {
+  if (numero >= 1000000) {
+    return (numero / 1000000).toFixed(1) + 'M';
+  } else if (numero >= 1000) {
+    return (numero / 1000).toFixed(1) + 'K';
+  }
+  
+  return numero.toString();
+}
+
 
 const Chart = component$(() => {
   const canvasRef = useSignal<HTMLCanvasElement>();
@@ -74,18 +91,18 @@ const Card = component$<{}>(() => {
   );
 });
 
-const SocialMediaStats = component$<{}>(() => {
+const SocialMediaStats = component$<SocialMediaStatsProps>((props) => {
   return (
     <Card>
       <div class="flex gap-3 p-4">
         <div class="flex flex-col justify-between flex-shrink-0">
           <div class="mb-4 flex gap-2">
-            <TwitchIcon width={40} height={28} />
-            <span class="text-lg font-bold">Twitch</span>
+            {props.icon}
+            <span class="text-lg font-bold">{props.platform}</span>
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-slate-400 text-xs">Total Views</span>
-            <span class="text-white font-bold font-mono text-3xl">23k</span>
+            <span class="text-white font-bold font-mono text-3xl">{transformarNumero(props.totalViewCount)}</span>
           </div>
         </div>
         <div class="flex-grow flex flex-col gap-3 items-end">
@@ -103,13 +120,12 @@ const SocialMediaStats = component$<{}>(() => {
   );
 });
 
-export default component$(() => {
+export default component$<SocialMediaStatsProps>((props) => {
+  console.log('asfasfasf', props)
   return (
     <div class="my-12 px-3 flex">
       <div class="flex flex-col sm:flex-row gap-3 w-full">
-        <SocialMediaStats />
-        {/* <SocialMediaStats />
-        <SocialMediaStats /> */}
+        <SocialMediaStats platform={props.platform} totalViewCount={props.totalViewCount} icon={props.icon}/>
       </div>
     </div>
   );
