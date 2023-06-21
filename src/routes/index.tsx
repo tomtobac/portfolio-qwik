@@ -20,6 +20,7 @@ import GithubRepos from "~/components/github-repos/github-repos";
 import Timeline from "~/components/timeline/timeline";
 import Weekcontent from "~/components/week-content/week-content";
 import { cn } from "~/utils/cn";
+import { YoutubeIcon } from "~/icons/youtube-icon";
 
 const twitchDataInfo = $(async function (
   name: string,
@@ -57,6 +58,15 @@ const twitchDataInfo = $(async function (
     state.twitch.token.access_token,
     true
   );
+
+  state.twitch.followers = await apiTwitch.getFollowers(
+    state.twitch.userInfo.data[0].id,
+    state.twitch.token.access_token,
+    true
+  );
+
+
+
 });
 
 async function obtenerShortsYVideosDeCanal(
@@ -107,7 +117,7 @@ async function obtenerShortsYVideosDeCanal(
 //   }
 // }
 
-const totalTwitchViews = arrayVideos => arrayVideos.reduce((acumulator, video) => {
+const totalTwitchViews = (arrayVideos: any) => arrayVideos.reduce((acumulator: number, video: any) => {
   return acumulator + video.view_count;
 }, 0);
 
@@ -288,7 +298,12 @@ export default component$(() => {
             </span>
           </p>
         </header>
-        <Weekcontent icon={<TwitchIcon/>} totalViewCount={state.twitch.totalViewCount} />
+
+        <div class="my-12 px-3 flex">
+          <div class="flex flex-col sm:flex-row gap-3 w-full">
+            <Weekcontent icon={<TwitchIcon width={40} height={28} />} sectionName={`Total Views`} platform={'Twitch'} stadisticsNumber={state.twitch.totalViewCount} />
+          </div>
+        </div>
         <Timeline />
 
         {(state.twitch.streams.data && state.twitch.streams.data.length && (

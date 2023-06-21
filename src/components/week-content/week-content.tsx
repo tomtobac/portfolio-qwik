@@ -1,21 +1,21 @@
 import { JSXNode, Slot, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-// import { TwitchIcon } from "~/icons/twitch-icon";
 import ChartJS from "chart.js/auto";
 import { IoTrendingUp } from "@qwikest/icons/ionicons";
 
 interface SocialMediaStatsProps {
-  totalViewCount: number;
+  stadisticsNumber: number;
   platform: string;
-  icon: JSXNode 
+  icon: JSXNode;
+  sectionName: string;
 }
 
-const transformarNumero = (numero:number) => {
+const transformarNumero = (numero: number) => {
   if (numero >= 1000000) {
     return (numero / 1000000).toFixed(1) + 'M';
   } else if (numero >= 1000) {
     return (numero / 1000).toFixed(1) + 'K';
   }
-  
+
   return numero.toString();
 }
 
@@ -92,17 +92,18 @@ const Card = component$<{}>(() => {
 });
 
 const SocialMediaStats = component$<SocialMediaStatsProps>((props) => {
+  const Icon = () => props.icon
   return (
     <Card>
       <div class="flex gap-3 p-4">
         <div class="flex flex-col justify-between flex-shrink-0">
           <div class="mb-4 flex gap-2">
-            {props.icon}
+            <Icon/>
             <span class="text-lg font-bold">{props.platform}</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-slate-400 text-xs">Total Views</span>
-            <span class="text-white font-bold font-mono text-3xl">{transformarNumero(props.totalViewCount)}</span>
+            <span class="text-slate-400 text-xs">{props.sectionName}</span>
+            <span class="text-white font-bold font-mono text-3xl">{transformarNumero(props.stadisticsNumber)}</span>
           </div>
         </div>
         <div class="flex-grow flex flex-col gap-3 items-end">
@@ -123,10 +124,10 @@ const SocialMediaStats = component$<SocialMediaStatsProps>((props) => {
 export default component$<SocialMediaStatsProps>((props) => {
   console.log('asfasfasf', props)
   return (
-    <div class="my-12 px-3 flex">
-      <div class="flex flex-col sm:flex-row gap-3 w-full">
-        <SocialMediaStats platform={props.platform} totalViewCount={props.totalViewCount} icon={props.icon}/>
-      </div>
-    </div>
+    // <div class="my-12 px-3 flex">
+    //   <div class="flex flex-col sm:flex-row gap-3 w-full">
+        <SocialMediaStats platform={props.platform} stadisticsNumber={props.stadisticsNumber} icon={props.icon} sectionName={props.sectionName} />
+    //   </div>
+    // </div>
   );
 });
