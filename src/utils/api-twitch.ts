@@ -53,17 +53,20 @@ export class Twitch {
     const clientSecret = "5pyma9uaboj352mlsplp04liuj6fes";
     const tokenEndpoint = `https://id.twitch.tv/oauth2/token?client_id=${this.clientID}&client_secret=${clientSecret}&grant_type=client_credentials`;
 
-    return fetch(tokenEndpoint, {
+    const response = await fetch(tokenEndpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-    }).then((response: ResponseType) => {
-      if (response.status < 200 || response.status > 299) {
-        return;
-      }
-      return response.json();
     });
+
+    const data = await response.json();
+
+    if (response.status < 200 || response.status > 299) {
+      throw new Error(data);
+    }
+
+    return data.access_token;
   }
 
   async getUser(
