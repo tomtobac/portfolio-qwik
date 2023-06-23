@@ -3,9 +3,11 @@ import {
   API_GITHUB_URL,
   API_YOUTUBE_URL,
   TWITCH_CHANNEL_NAME,
-  TWTICH_CHANNEL_ID,
+  TWITCH_CHANNEL_ID,
 } from "~/constant";
 import { Twitch } from "~/utils/api-twitch";
+
+// https://www.googleapis.com/youtube/v3/channels?part=statistics&key=AIzaSyDjyp6v1Zb1SV8JdeoV-rLT_rR1MONAL9U&id=MiYTCF_Z8OQ&id=UCJbPGzawDH1njbqV-D5HqKw
 
 export async function getYoutubeVideos() {
   try {
@@ -54,16 +56,18 @@ export async function getTwitchData() {
   if (!token) throw new Error("No se pudo obtener el token de Twitch");
 
   const channelInfo = await apiTwitch.getChannel(
-    TWTICH_CHANNEL_ID,
+    TWITCH_CHANNEL_ID,
     token,
     true
   );
 
-  const [userInfo, categoryInfo, streams, videos] = await Promise.all([
+  const [userInfo, categoryInfo, streams, videos, chatEmotes] = await Promise.all([
     apiTwitch.getUser(TWITCH_CHANNEL_NAME, token, true),
     apiTwitch.getCategory(channelInfo.data[0].game_id, token, true),
-    apiTwitch.getStreams(TWTICH_CHANNEL_ID, token, true),
-    apiTwitch.getVideos(TWTICH_CHANNEL_ID, token, true),
+    apiTwitch.getStreams(TWITCH_CHANNEL_ID, token, true),
+    apiTwitch.getVideos(TWITCH_CHANNEL_ID, token, true),
+    apiTwitch.getChannelChatEmotes(TWITCH_CHANNEL_ID, token, true),
+
   ]);
 
   const followers = await apiTwitch.getFollowers(
@@ -86,5 +90,6 @@ export async function getTwitchData() {
     videos,
     followers,
     totalViewCount,
+    chatEmotes
   };
 }
