@@ -20,3 +20,7 @@ export const API_GITHUB_REPOS_URL = isProd
 export const API_YOUTUBE_URL = isProd
   ? `https://www.googleapis.com/youtube/v3/search?channelId=${YOUTUBE_CHANNEL_ID}&maxResults=10&channelType=any&type=video&order=date&part=snippet&key=${PUBLIC_YOUTUBE_API_KEY}`
   : `${LOCAL_ADDRESS}/mocks/api-youtube-mock.json`;
+
+export const API_YOUTUBE_VIDEOS_URL = isProd
+  ? `https://www.googleapis.com/youtube/v3/videos`
+  : `${LOCAL_ADDRESS}/mocks/api-youtube-video-stadistics.json`;
