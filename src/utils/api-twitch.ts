@@ -16,6 +16,7 @@ export class Twitch {
   private schedule: any;
   private streams: any | undefined;
   private videos: any | undefined;
+  private channelChatEmotes: any | undefined;
 
   constructor() {
     if (!Twitch.instance) {
@@ -228,6 +229,31 @@ export class Twitch {
       .then((response: ResponseType) => response.json())
       .catch((error) => console.error(error));
   }
+
+  async getChannelChatEmotes(
+    userID: string,
+    accessToken: string,
+    forceReload = false
+  ): Promise<any> {
+    const endpoint = (id: string) =>
+      `https://api.twitch.tv/helix/chat/emotes?broadcaster_id=${id}`;
+
+    if (this.channelChatEmotes && !forceReload) {
+      return this.channelChatEmotes;
+    }
+
+    return fetch(endpoint(userID), {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Client-Id": `${this.clientID}`,
+      },
+    })
+      .then((response: ResponseType) => response.json())
+      .catch((error) => console.error(error));
+  }
+
+  
 
   async searchChannels(
     query: string,

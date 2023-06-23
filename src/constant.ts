@@ -7,7 +7,7 @@ export const PUBLIC_YOUTUBE_API_KEY = "AIzaSyC3O-zPANM6pcSOIY49QzaU66VJuCslKw4";
 export const YOUTUBE_CHANNEL_ID = "UCJbPGzawDH1njbqV-D5HqKw";
 
 export const TWITCH_CHANNEL_NAME = "ArturoZarzalejo";
-export const TWTICH_CHANNEL_ID = "794553674";
+export const TWITCH_CHANNEL_ID = "794553674";
 
 export const API_GITHUB_URL = isProd
   ? "https://api.github.com/users/arturozarzalejo"
